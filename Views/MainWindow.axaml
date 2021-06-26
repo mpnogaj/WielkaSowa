@@ -1,0 +1,36 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:WielkaSowa.ViewModels"
+        xmlns:models="clr-namespace:WielkaSowa.Models"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="WielkaSowa.Views.MainWindow"
+        x:DataType="viewmodels:MainWindowViewModel"
+        Title="WielkaSowa"
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="#EE202120">
+    <Grid RowDefinitions="30,*,75" Margin="10, 0, 10, 0">
+        <TextBlock IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Wielka sowa"/>
+        <ListBox Grid.Row="1" Margin="0, 15, 0, 0" Items="{CompiledBinding Classes}" SelectedItem="{CompiledBinding SelectedClass}">
+            <ListBox.ItemTemplate>
+                <DataTemplate DataType="{x:Type models:Class}">
+                    <TextBlock Text="{Binding}"/>
+                </DataTemplate>
+            </ListBox.ItemTemplate>
+        </ListBox>
+        <Grid Grid.Row="2" ColumnDefinitions="Auto, *, Auto">
+            <TextBlock Grid.Row="0" Text="COPYRIGHT © 1LICEUM.PL" VerticalAlignment="Center"/>
+            <StackPanel Grid.Column="1" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15">
+                        <Button Content="Dodaj klase" Command="{CompiledBinding AddClassCommand}"/>
+                        <Button Content="Modyfikuj klase" Command="{CompiledBinding ModifyClass}"/>
+                        <Button Content="Usun klase" Command="{CompiledBinding RemoveClassCommand}"/>
+            </StackPanel>
+            <StackPanel Grid.Column="2" Orientation="Horizontal" VerticalAlignment="Center">
+                <TextBlock Text="Code and design: "/>
+                <TextBlock FontWeight="Bold" Text="MARCIN NOGAJ"/>
+            </StackPanel>
+        </Grid>
+    </Grid>
+</Window>

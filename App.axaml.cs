@@ -1,6 +1,8 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
+using WielkaSowa.Views;
+using WielkaSowa.Views;
 
 namespace WielkaSowa
 {
