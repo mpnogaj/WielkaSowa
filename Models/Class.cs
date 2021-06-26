@@ -8,10 +8,11 @@ namespace WielkaSowa.Models
     {
         public ClassData ClassData { get; set; } = new();
         public int Points { get; set; } = 0;
+        public int Place { get; set; } = 1;
 
         public override string ToString()
         {
-            return $"{ClassData.ToString()} - {Points}";
+            return $"{Place}: {ClassData} - {Points}";
         }
     }
 

@@ -3,24 +3,25 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:WielkaSowa.ViewModels"
-        xmlns:models="clr-namespace:WielkaSowa.Models"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WielkaSowa.Views.ManageClass"
         x:DataType="viewmodels:ManageClassViewModel"
         TransparencyLevelHint="AcrylicBlur"
         Background="#EE202120"
         ExtendClientAreaToDecorationsHint="True"
+        Icon="/Assets/Icons/main.ico"
         Title="Zarządzaj klasą">
     <Window.Styles>
         <Style Selector="HeaderedContentControl">
-            <Setter Property="Margin" Value="0, 15, 0, 0"/>
-            <Setter Property="Background" Value="#2d2e2d"/>
+            <Setter Property="Margin" Value="0, 15, 0, 0" />
+            <Setter Property="Background" Value="#2d2e2d" />
             <Setter Property="Template">
                 <Setter.Value>
                     <ControlTemplate>
                         <Border>
                             <Grid RowDefinitions="Auto,*">
-                                <ContentPresenter Margin="0, 0, 0, 3" TextBlock.FontWeight="Bold" Content="{TemplateBinding Header}" />
+                                <ContentPresenter Margin="0, 0, 0, 3" TextBlock.FontWeight="Bold"
+                                                  Content="{TemplateBinding Header}" />
                                 <Border Grid.Row="1"
                                         BorderBrush="{TemplateBinding Background}"
                                         BorderThickness="2"
@@ -37,46 +38,45 @@
         </Style>
     </Window.Styles>
     <Grid RowDefinitions="30,Auto,*,75" Margin="10, 0, 10, 0">
-        <TextBlock Grid.Row="0" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Zarządzaj klasą"/>
-        <HeaderedContentControl Grid.Row="1" Header="Informacje generalne" Background="{DynamicResource ComboBoxBorderBrush}">
+        <TextBlock Grid.Row="0" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center"
+                   Text="Zarządzaj klasą" />
+        <HeaderedContentControl Grid.Row="1" Header="Informacje generalne"
+                                Background="{DynamicResource ComboBoxBorderBrush}">
             <StackPanel Orientation="Horizontal" Spacing="15">
                 <StackPanel.Styles>
                     <Style Selector="TextBlock">
-                        <Setter Property="VerticalAlignment" Value="Center"/>
+                        <Setter Property="VerticalAlignment" Value="Center" />
                     </Style>
                     <Style Selector="ComboBox">
-                        <Setter Property="VerticalAlignment" Value="Center"/>
-                        <Setter Property="Width" Value="75"/>
-                        <Setter Property="Padding" Value="4"/>
+                        <Setter Property="VerticalAlignment" Value="Center" />
+                        <Setter Property="Width" Value="75" />
+                        <Setter Property="Padding" Value="4" />
                     </Style>
                 </StackPanel.Styles>
-                <TextBlock Text="Litera:"/>
-                <ComboBox Items="{CompiledBinding Class.ClassData.AvailableLetters, Mode=OneWay}" SelectedIndex="{CompiledBinding Class.ClassData.LetterIndex}"/>
-                <TextBlock Text="Numer:"/>
-                <ComboBox Items="{CompiledBinding Class.ClassData.AvailableLevels, Mode=OneWay}" SelectedIndex="{CompiledBinding Class.ClassData.LevelIndex}"/>
-                <TextBlock Text="Po szkole podstawowej:"/>
-                <CheckBox IsChecked="{CompiledBinding Class.ClassData.AfterPrimarySchool}"/>
+                <TextBlock Text="Litera:" />
+                <ComboBox Items="{CompiledBinding Class.ClassData.AvailableLetters, Mode=OneWay}"
+                          SelectedIndex="{CompiledBinding Class.ClassData.LetterIndex}" />
+                <TextBlock Text="Numer:" />
+                <ComboBox Items="{CompiledBinding Class.ClassData.AvailableLevels, Mode=OneWay}"
+                          SelectedIndex="{CompiledBinding Class.ClassData.LevelIndex}" />
+                <TextBlock Text="Po szkole podstawowej:" />
+                <CheckBox IsChecked="{CompiledBinding Class.ClassData.AfterPrimarySchool}" />
             </StackPanel>
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Row="2" Header="Punkty" Background="{DynamicResource ComboBoxBorderBrush}">
             <TabControl>
-                <TabItem Header="Oceny, frekfencja i zachowanie">
-                    
-                </TabItem>
+                <TabItem Header="Oceny, frekfencja i zachowanie" />
                 <TabItem Header="Konkursy i olimpiady">
-                    <Grid >
-                        
-                    </Grid>
+                    <Grid />
                 </TabItem>
-                <TabItem Header="Inicjatywy i imprezy">
-                    
-                </TabItem>
-                <TabItem Header="Sport"></TabItem>
+                <TabItem Header="Inicjatywy i imprezy" />
+                <TabItem Header="Sport" />
             </TabControl>
         </HeaderedContentControl>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right">
-            <Button Width="75" HorizontalContentAlignment="Center" Content="Anuluj" Command="{CompiledBinding CancelCommand}"/>
-            <Button Width="75" HorizontalContentAlignment="Center"  Content="Ok" Command="{CompiledBinding OkCommand}"/>
+            <Button Width="75" HorizontalContentAlignment="Center" Content="Anuluj"
+                    Command="{CompiledBinding CancelCommand}" />
+            <Button Width="75" HorizontalContentAlignment="Center" Content="Ok" Command="{CompiledBinding OkCommand}" />
         </StackPanel>
     </Grid>
 </Window>

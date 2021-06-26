@@ -8,6 +8,7 @@
         x:Class="WielkaSowa.Views.MainWindow"
         x:DataType="viewmodels:MainWindowViewModel"
         Title="WielkaSowa"
+        Icon="/Assets/Icons/main.ico"
         ExtendClientAreaToDecorationsHint="True"
         TransparencyLevelHint="AcrylicBlur"
         Background="#EE202120">
