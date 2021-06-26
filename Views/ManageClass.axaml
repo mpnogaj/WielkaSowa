@@ -23,7 +23,7 @@
                                 <ContentPresenter Margin="0, 0, 0, 3" TextBlock.FontWeight="Bold"
                                                   Content="{TemplateBinding Header}" />
                                 <Border Grid.Row="1"
-                                        BorderBrush="{TemplateBinding Background}"
+                                        BorderBrush="{DynamicResource ComboBoxBorderBrush}"
                                         BorderThickness="2"
                                         CornerRadius="5"
                                         Padding="5"
@@ -36,12 +36,14 @@
                 </Setter.Value>
             </Setter>
         </Style>
+        <Style Selector="TextBox">
+            <Setter Property="Width" Value="75"/>
+        </Style>
     </Window.Styles>
     <Grid RowDefinitions="30,Auto,*,75" Margin="10, 0, 10, 0">
         <TextBlock Grid.Row="0" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center"
                    Text="Zarządzaj klasą" />
-        <HeaderedContentControl Grid.Row="1" Header="Informacje generalne"
-                                Background="{DynamicResource ComboBoxBorderBrush}">
+        <HeaderedContentControl Grid.Row="1" Header="Informacje generalne">
             <StackPanel Orientation="Horizontal" Spacing="15">
                 <StackPanel.Styles>
                     <Style Selector="TextBlock">
@@ -63,11 +65,43 @@
                 <CheckBox IsChecked="{CompiledBinding Class.ClassData.AfterPrimarySchool}" />
             </StackPanel>
         </HeaderedContentControl>
-        <HeaderedContentControl Grid.Row="2" Header="Punkty" Background="{DynamicResource ComboBoxBorderBrush}">
+        <HeaderedContentControl Grid.Row="2" Header="Punkty">
             <TabControl>
+                <TabControl.Styles>
+                    <Style Selector="TabItem">
+                        <Setter Property="TextBox.FontSize" Value="15"/>
+                    </Style>
+                </TabControl.Styles>
                 <TabItem Header="Oceny, frekfencja i zachowanie" />
                 <TabItem Header="Konkursy i olimpiady">
-                    <Grid />
+                    <Grid ColumnDefinitions="*,*">
+                        <HeaderedContentControl Header="Olimpiady">
+                            <StackPanel Orientation="Vertical" Spacing="15">
+                                <StackPanel.Styles>
+                                    <Style Selector="StackPanel">
+                                        <Setter Property="Orientation" Value="Horizontal"/>
+                                        <Setter Property="Spacing" Value="10"/>
+                                    </Style>
+                                </StackPanel.Styles>
+                                <StackPanel>
+                                    <TextBlock Text="Szkolnym"/>
+                                    <TextBox/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Text="Okręgowym"/>
+                                    <TextBox/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Text="Centralnym"/>
+                                    <TextBox/>
+                                </StackPanel>
+                                <StackPanel>
+                                    <TextBlock Text="Międzynarodowy"/>
+                                    <TextBox/>
+                                </StackPanel>
+                            </StackPanel>
+                        </HeaderedContentControl>
+                    </Grid>
                 </TabItem>
                 <TabItem Header="Inicjatywy i imprezy" />
                 <TabItem Header="Sport" />

@@ -5,6 +5,7 @@
       <map>
         <entry key="App.axaml" value="WielkaSowa.csproj" />
         <entry key="MainWindow.axaml" value="WielkaSowa.csproj" />
+        <entry key="Views/MainWindow.axaml" value="WielkaSowa.csproj" />
         <entry key="Views/ManageClass.axaml" value="WielkaSowa.csproj" />
       </map>
     </option>
