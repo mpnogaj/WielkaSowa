@@ -14,7 +14,7 @@ namespace WielkaSowa.ViewModels
             set => SetProperty(ref _classes, value);
         }
 
-        private List<Class> _workingList;
+        private readonly List<Class> _workingList;
 
         private Class? _selectedClass;
         public Class? SelectedClass
@@ -68,7 +68,6 @@ namespace WielkaSowa.ViewModels
                 var pointsChanged = false;
                 ManageClassViewModel manageClassViewModel = new((c) =>
                 {
-                    // Trigger OnPropertyChanged
                     if (c.Points != _workingList[selectedClassIndex].Points) pointsChanged = true;
                     _workingList[selectedClassIndex] = c;
                     CommitChanges();

@@ -37,7 +37,7 @@
             </Setter>
         </Style>
         <Style Selector="TextBox">
-            <Setter Property="Width" Value="75"/>
+            <Setter Property="Width" Value="75" />
         </Style>
     </Window.Styles>
     <Grid RowDefinitions="30,Auto,*,75" Margin="10, 0, 10, 0">
@@ -66,45 +66,72 @@
             </StackPanel>
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Row="2" Header="Punkty">
-            <TabControl>
+            <TabControl TabStripPlacement="Top">
                 <TabControl.Styles>
                     <Style Selector="TabItem">
-                        <Setter Property="TextBox.FontSize" Value="15"/>
+                        <Setter Property="TextBox.FontSize" Value="15" />
                     </Style>
                 </TabControl.Styles>
                 <TabItem Header="Oceny, frekfencja i zachowanie" />
-                <TabItem Header="Konkursy i olimpiady">
-                    <Grid ColumnDefinitions="*,*">
-                        <HeaderedContentControl Header="Olimpiady">
-                            <StackPanel Orientation="Vertical" Spacing="15">
-                                <StackPanel.Styles>
-                                    <Style Selector="StackPanel">
-                                        <Setter Property="Orientation" Value="Horizontal"/>
-                                        <Setter Property="Spacing" Value="10"/>
-                                    </Style>
-                                </StackPanel.Styles>
-                                <StackPanel>
-                                    <TextBlock Text="Szkolnym"/>
-                                    <TextBox/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <TextBlock Text="Okręgowym"/>
-                                    <TextBox/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <TextBlock Text="Centralnym"/>
-                                    <TextBox/>
-                                </StackPanel>
-                                <StackPanel>
-                                    <TextBlock Text="Międzynarodowy"/>
-                                    <TextBox/>
-                                </StackPanel>
-                            </StackPanel>
-                        </HeaderedContentControl>
-                    </Grid>
+                <TabItem Header="Konkursy, olimpiady i sport">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0">
+                        <WrapPanel  Orientation="Horizontal">
+                            <WrapPanel.Styles>
+                                <Style Selector="TextBlock">
+                                    <Setter Property="VerticalAlignment" Value="Center" />
+                                    <Setter Property="DockPanel.Dock" Value="Left"/>
+                                </Style>
+                                <Style Selector="TextBox">
+                                    <Setter Property="Margin" Value="15,0,0,0" />
+                                    <Setter Property="Height" Value="30" />
+                                    <Setter Property="Width" Value="NaN"/>
+                                    <Setter Property="MinWidth" Value="100"/>
+                                    <Setter Property="DockPanel.Dock" Value="Right"/>
+                                </Style>
+                                <Style Selector="DockPanel">
+                                    <Setter Property="LastChildFill" Value="True"/>
+                                </Style>
+                                <Style Selector="HeaderedContentControl">
+                                    <Setter Property="Margin" Value="5"/>
+                                    <Setter Property="Height" Value="250"/>
+                                </Style>
+                            </WrapPanel.Styles>
+                            <HeaderedContentControl Header="Olimpiady">
+                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="Auto,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Szkolne" />
+                                    <TextBox Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Okręgowe" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Centralne" />
+                                    <TextBox Grid.Row="2" Grid.Column="1" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Międzynarodowe" />
+                                    <TextBox Grid.Row="3" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Konkursy">
+                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*" >
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Szkolne" />
+                                    <TextBox Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Rejonowe" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Centralne" />
+                                    <TextBox Grid.Row="2" Grid.Column="1" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Międzynarodowe" />
+                                    <TextBox Grid.Row="3" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Sport">
+                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*" >
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Przyznane przez nauczycieli WF" />
+                                    <TextBox Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Udział w zawodach sportowych,&#x0a;poza szkolnym klubem sportowym" />
+                                    <TextBox Grid.Row="1" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                        </WrapPanel>
+                    </ScrollViewer>
                 </TabItem>
                 <TabItem Header="Inicjatywy i imprezy" />
-                <TabItem Header="Sport" />
             </TabControl>
         </HeaderedContentControl>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right">

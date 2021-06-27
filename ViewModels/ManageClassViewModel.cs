@@ -1,5 +1,4 @@
 using System;
-using System.Collections.Generic;
 using WielkaSowa.Models;
 
 namespace WielkaSowa.ViewModels
@@ -27,7 +26,7 @@ namespace WielkaSowa.ViewModels
             });
             CancelCommand = new RelayCommand(() =>
             {
-                if (onCancel != null) onCancel();
+                onCancel?.Invoke();
                 Essentials.CloseTopWindow();
             });
         }
