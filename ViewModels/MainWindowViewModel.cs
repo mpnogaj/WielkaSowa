@@ -1,3 +1,4 @@
+using System;
 using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using WielkaSowa.Models;
@@ -40,7 +41,7 @@ namespace WielkaSowa.ViewModels
                 new()
                 {
                     ClassData = new ClassData('A', "II", false),
-                    Points = 500
+                    Points = 500,
                 },
                 new()
                 {
@@ -93,38 +94,54 @@ namespace WielkaSowa.ViewModels
         // We are assuming that list is sorted before adding new item
         private void ReorderClasses()
         {
-            var i = 0;
-            var j = _workingList.Count - 1;
-            while(i < _workingList.Count - 1)
+            try
             {
-                if (_workingList[i].Points < _workingList[j].Points)
+                var i = 0;
+                var j = _workingList.Count - 1;
+                while (i < _workingList.Count - 1)
                 {
-                    SwapClasses(i, j);
-                    break;
+                    if (_workingList[i].Points < _workingList[j].Points)
+                    {
+                        SwapClasses(i, j);
+                        break;
+                    }
+
+                    i++;
                 }
 
-                i++;
+                // i -> new item correct position
+                // j -> end of the list
+                while (j - 1 > i)
+                {
+                    SwapClasses(j, j - 1);
+                    j--;
+                }
+
+                UpdatePlaces();
             }
-            // i -> new item correct position
-            // j -> end of the list
-            while (j - 1 > i)
+            catch (ArgumentOutOfRangeException)
             {
-                SwapClasses(j, j - 1);
-                j--;
+                /*No active classes. Just ignore*/
             }
-            UpdatePlaces();
         }
 
         private void UpdatePlaces()
         {
-            var currPlace = 1;
-            var prevPoints = _workingList[0].Points;
-            _workingList[0].Place = 1;
-            for (var i = 1; i < _workingList.Count; i++)
+            try
             {
-                if (_workingList[i].Points != prevPoints) currPlace++;
-                _workingList[i].Place = currPlace;
-                prevPoints = _workingList[i].Points;
+                var currPlace = 1;
+                var prevPoints = _workingList[0].Points;
+                _workingList[0].Place = 1;
+                for (var i = 1; i < _workingList.Count; i++)
+                {
+                    if (_workingList[i].Points != prevPoints) currPlace++;
+                    _workingList[i].Place = currPlace;
+                    prevPoints = _workingList[i].Points;
+                }
+            }
+            catch (ArgumentOutOfRangeException)
+            {
+                /*No active classes. Just ignore*/
             }
         }
 

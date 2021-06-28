@@ -98,6 +98,8 @@
                           SelectedIndex="{CompiledBinding Class.ClassData.LevelIndex}" />
                 <TextBlock Text="Po szkole podstawowej:" />
                 <CheckBox IsChecked="{CompiledBinding Class.ClassData.AfterPrimarySchool}" />
+                <TextBlock Text="Sumaryczna ilość punktów:"/>
+                <TextBlock Text="{CompiledBinding Class.Points}" FontWeight="Bold"/>
             </StackPanel>
         </HeaderedContentControl>
         <HeaderedContentControl Grid.Row="2" Header="Punkty">
@@ -128,17 +130,23 @@
                             <HeaderedContentControl Header="Zachowanie">
                                 <Grid RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*">
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Wzorowe" />
-                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1"
+                                             Text="{CompiledBinding Class.Wzor}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Bardzo dobre" />
-                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.Bdb}"/>
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Dobre" />
-                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.Db}"/>
                                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Poprawne" />
-                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.Pop}"/>
                                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Nieodpowiednie" />
-                                    <TextBox Classes="Pers" Grid.Row="4" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="4" Grid.Column="1"
+                                             Text="{CompiledBinding Class.NOdp}"/>
                                     <TextBlock Grid.Row="5" Grid.Column="0" Text="Naganne" />
-                                    <TextBox Classes="Pers" Grid.Row="5" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="5" Grid.Column="1"
+                                             Text="{CompiledBinding Class.Nag}"/>
                                 </Grid>
                             </HeaderedContentControl>
                         </WrapPanel>

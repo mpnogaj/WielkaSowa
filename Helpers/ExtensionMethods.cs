@@ -28,6 +28,7 @@ namespace WielkaSowa.Helpers
         public static double ToDouble(this string s)
         {
             if (s == string.Empty) return 0;
+            if (!s.IsRealNumber()) return 0;
             try
             {
                 return Convert.ToDouble(s.Replace('.', ','));
@@ -36,6 +37,11 @@ namespace WielkaSowa.Helpers
             {
                 return 0;
             }
+        }
+
+        public static int ToInt(this string s)
+        {
+            return (int) s.ToDouble();
         }
     }
 }
