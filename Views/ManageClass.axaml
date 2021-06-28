@@ -37,7 +37,42 @@
             </Setter>
         </Style>
         <Style Selector="TextBox">
-            <Setter Property="Width" Value="75" />
+            <Setter Property="Margin" Value="15,0,0,0" />
+            <Setter Property="Height" Value="30" />
+            <Setter Property="Width" Value="NaN" />
+            <Setter Property="MinWidth" Value="100" />
+        </Style>
+
+        <!--%, 5.6-->
+        <Style Selector="TextBox.Val:focus/template/Border">
+            <Setter Property="BorderBrush" Value="Green" />
+        </Style>
+        <Style Selector="TextBox.Val">
+            <Setter Property="Watermark" Value="Wartość/Ilość" />
+        </Style>
+        <!--Number of points-->
+        <Style Selector="TextBox.Poin:focus/template/Border">
+            <Setter Property="BorderBrush" Value="Yellow" />
+        </Style>
+        <Style Selector="TextBox.Poin">
+            <Setter Property="Watermark" Value="Ilość punktów" />
+        </Style>
+        <!--Number of people participated-->
+        <Style Selector="TextBox.Pers:focus/template/Border">
+            <Setter Property="BorderBrush" Value="Blue" />
+        </Style>
+        <Style Selector="TextBox.Pers">
+            <Setter Property="Watermark" Value="Ilość osób" />
+        </Style>
+        <Style Selector="TextBox:error">
+            <Setter Property="Height" Value="55" />
+        </Style>
+        <Style Selector="TextBox:error/template/Border">
+            <Setter Property="BorderBrush" Value="Red" />
+        </Style>
+
+        <Style Selector="TextBlock">
+            <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </Window.Styles>
     <Grid RowDefinitions="30,Auto,*,75" Margin="10, 0, 10, 0">
@@ -69,69 +104,138 @@
             <TabControl TabStripPlacement="Top">
                 <TabControl.Styles>
                     <Style Selector="TabItem">
-                        <Setter Property="TextBox.FontSize" Value="15" />
+                        <Setter Property="FontSize" Value="15" />
+                    </Style>
+                    <Style Selector="HeaderedContentControl">
+                        <Setter Property="Margin" Value="5" />
+                        <Setter Property="MinHeight" Value="250" />
                     </Style>
                 </TabControl.Styles>
-                <TabItem Header="Oceny, frekfencja i zachowanie" />
-                <TabItem Header="Konkursy, olimpiady i sport">
-                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto" Margin="0,10,0,0">
-                        <WrapPanel  Orientation="Horizontal">
-                            <WrapPanel.Styles>
-                                <Style Selector="TextBlock">
-                                    <Setter Property="VerticalAlignment" Value="Center" />
-                                    <Setter Property="DockPanel.Dock" Value="Left"/>
-                                </Style>
-                                <Style Selector="TextBox">
-                                    <Setter Property="Margin" Value="15,0,0,0" />
-                                    <Setter Property="Height" Value="30" />
-                                    <Setter Property="Width" Value="NaN"/>
-                                    <Setter Property="MinWidth" Value="100"/>
-                                    <Setter Property="DockPanel.Dock" Value="Right"/>
-                                </Style>
-                                <Style Selector="DockPanel">
-                                    <Setter Property="LastChildFill" Value="True"/>
-                                </Style>
-                                <Style Selector="HeaderedContentControl">
-                                    <Setter Property="Margin" Value="5"/>
-                                    <Setter Property="Height" Value="250"/>
-                                </Style>
-                            </WrapPanel.Styles>
-                            <HeaderedContentControl Header="Olimpiady">
-                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="Auto,*">
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Szkolne" />
-                                    <TextBox Grid.Row="0" Grid.Column="1" />
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Okręgowe" />
-                                    <TextBox Grid.Row="1" Grid.Column="1" />
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Centralne" />
-                                    <TextBox Grid.Row="2" Grid.Column="1" />
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Międzynarodowe" />
-                                    <TextBox Grid.Row="3" Grid.Column="1" />
+                <TabItem Header="Oceny, frekfencja i zachowanie">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                                  Margin="0,10,0,0">
+                        <WrapPanel Orientation="Horizontal">
+                            <HeaderedContentControl Header="Średnie">
+                                <Grid RowDefinitions="*,*" ColumnDefinitions="Auto,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Średnia frekwencja klasy" />
+                                    <TextBox Classes="Val" Grid.Row="0" Grid.Column="1"
+                                             Text="{CompiledBinding Class.AverageAtt}" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Średnia ocen klasy" />
+                                    <TextBox Classes="Val" Grid.Row="1" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.AverageMark}"/>
                                 </Grid>
                             </HeaderedContentControl>
-                            <HeaderedContentControl Header="Konkursy">
-                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*" >
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Szkolne" />
-                                    <TextBox Grid.Row="0" Grid.Column="1" />
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Rejonowe" />
-                                    <TextBox Grid.Row="1" Grid.Column="1" />
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Centralne" />
-                                    <TextBox Grid.Row="2" Grid.Column="1" />
-                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Międzynarodowe" />
-                                    <TextBox Grid.Row="3" Grid.Column="1" />
-                                </Grid>
-                            </HeaderedContentControl>
-                            <HeaderedContentControl Header="Sport">
-                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*" >
-                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Przyznane przez nauczycieli WF" />
-                                    <TextBox Grid.Row="0" Grid.Column="1" />
-                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Udział w zawodach sportowych,&#x0a;poza szkolnym klubem sportowym" />
-                                    <TextBox Grid.Row="1" Grid.Column="1" />
+                            <HeaderedContentControl Header="Zachowanie">
+                                <Grid RowDefinitions="*,*,*,*,*,*" ColumnDefinitions="*,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Wzorowe" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Bardzo dobre" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Dobre" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Poprawne" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Nieodpowiednie" />
+                                    <TextBox Classes="Pers" Grid.Row="4" Grid.Column="1" />
+                                    <TextBlock Grid.Row="5" Grid.Column="0" Text="Naganne" />
+                                    <TextBox Classes="Pers" Grid.Row="5" Grid.Column="1" />
                                 </Grid>
                             </HeaderedContentControl>
                         </WrapPanel>
                     </ScrollViewer>
                 </TabItem>
-                <TabItem Header="Inicjatywy i imprezy" />
+                <TabItem Header="Konkursy, olimpiady i sport">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                                  Margin="0,10,0,0">
+                        <WrapPanel Orientation="Horizontal">
+                            <HeaderedContentControl Header="Olimpiady">
+                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="Auto,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Szkolne" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Okręgowe" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Centralne" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Międzynarodowe" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Konkursy">
+                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Szkolne" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Rejonowe" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Centralne" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Międzynarodowe" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Sport">
+                                <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Przyznane przez nauczycieli WF" />
+                                    <TextBox Classes="Poin" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0"
+                                               Text="Udział w zawodach sportowych,&#x0a;poza szkolnym klubem sportowym" />
+                                    <TextBox Classes="Poin" Grid.Row="1" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                        </WrapPanel>
+                    </ScrollViewer>
+                </TabItem>
+                <TabItem Header="Inicjatywy i imprezy">
+                    <ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                                  Margin="0,10,0,0">
+                        <WrapPanel Orientation="Horizontal">
+                            <HeaderedContentControl Header="Inicjatywy na rzecz klasy">
+                                <Grid RowDefinitions="*,*,*" ColumnDefinitions="Auto,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Wycieczki 1-dniowe" />
+                                    <TextBox Classes="Val" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Wycieczki 2 i więcej dniowe" />
+                                    <TextBox Classes="Val" Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Przedsięwzięcia klasowe" />
+                                    <TextBox Classes="Val" Grid.Row="2" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Inicjatywy na rzecz środowiska pozaszkolnego">
+                                <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Wolontariat" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="MRM" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="ZHP i ZHR" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0"
+                                               Text="Działalność w stowarzyszeniu lub&#x0a;organizacji pożytku publicznego" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                    <TextBlock Grid.Row="4" Grid.Column="0" Text="Zbiórki, organizacje itp." />
+                                    <TextBox Classes="Pers" Grid.Row="4" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Zaangażowanie w imprezy szkolne">
+                                <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Program artystyczny" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Kiermasze" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Organizacja imprez szkolnych" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBlock Grid.Row="3" Grid.Column="0" Text="Pomoc w organizacji imprez szkolnych" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                            <HeaderedContentControl Header="Udział w agendach szkolnych">
+                                <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
+                                    <TextBlock Grid.Row="0" Grid.Column="0" Text="Parlament Uczniowski" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBlock Grid.Row="1" Grid.Column="0" Text="Poczet sztandarowy" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                </Grid>
+                            </HeaderedContentControl>
+                        </WrapPanel>
+                    </ScrollViewer>
+                </TabItem>
             </TabControl>
         </HeaderedContentControl>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right">

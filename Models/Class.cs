@@ -1,14 +1,44 @@
 using System.Collections.Generic;
 using System.Text;
-using WielkaSowa.ViewModels;
+using WielkaSowa.Helpers;
 
 namespace WielkaSowa.Models
 {
     public class Class
     {
+        private readonly Pair<double, double> _percentRange = new(0, 100);
+        private readonly Pair<double, double> _markRange = new(0, 6);
+        private readonly Pair<double, double> _peopleRange = new(0, 40);
+        
         public ClassData ClassData { get; set; } = new();
         public int Points { get; set; } = 0;
         public int Place { get; set; } = 1;
+
+        private string _averageAtt = "";
+        public string AverageAtt
+        {
+            get => _averageAtt;
+            set
+            {
+                Validator.ValidateRealNumber(value);
+                if(value != string.Empty)
+                    Validator.ValidateRange(value.ToDouble(), _percentRange);
+                _averageAtt = value;
+            }
+        }
+
+        private string _averageMark = "";
+        public string AverageMark
+        {
+            get => _averageMark;
+            set
+            {
+                Validator.ValidateRealNumber(value);
+                if(value != string.Empty)
+                    Validator.ValidateRange(value.ToDouble(), _markRange);
+                _averageMark = value;
+            }
+        }
 
         public override string ToString()
         {

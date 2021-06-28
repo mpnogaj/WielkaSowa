@@ -7,8 +7,8 @@ namespace WielkaSowa.Helpers
 
         public Pair(T first, TY second)
         {
-            this.First = first;
-            this.Second = second;
+            First = first;
+            Second = second;
         }
     }
 }
