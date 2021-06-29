@@ -12,7 +12,7 @@ namespace WielkaSowa.Models
         private readonly Pair<double, double> _percentRange = new(0, 100);
         private readonly Pair<double, double> _markRange = new(0, 6);
         private readonly Pair<double, double> _peopleRange = new(0, 40);
-        private readonly Pair<double, double> _peTeacherRange = new(0, double.MaxValue);
+        private readonly Pair<double, double> _normalRange = new(0, double.MaxValue);
         private readonly Pair<double, double> _sportsClubsRange = new(0, 100);
         private readonly List<PropertyInfo> _properties = new();
         
@@ -136,7 +136,7 @@ namespace WielkaSowa.Models
         public string PeTeacher
         {
             get => _peTeacher;
-            set => Validator.ValidateAndSet(false, _peTeacherRange, value, out _peTeacher, this);
+            set => Validator.ValidateAndSet(false, _normalRange, value, out _peTeacher, this);
         }
         
         private string _sportsClubs = "";
@@ -147,14 +147,77 @@ namespace WielkaSowa.Models
         }
         
         #endregion
-
+        #region Class actions
         private string _class1Day = "";
         public string Class1Day
         {
             get => _class1Day;
             set => Validator.ValidateAndSet(false, _peopleRange, value, out _class1Day, this);
         }
+
+        private string _class2Day = "";
+        public string Class2Day
+        {
+            get => _class2Day;
+            set => Validator.ValidateAndSet(false, _peopleRange, value, out _class2Day, this);
+        }
         
+        private string _classActions = "";
+        public string ClassActions
+        {
+            get => _classActions;
+            set => Validator.ValidateAndSet(false, _normalRange, value, out _classActions, this);
+        }
+        #endregion
+        #region School agendas
+        
+        private string _studentParliament = "";
+        public string StudentParliament
+        {
+            get => _studentParliament;
+            set => Validator.ValidateAndSet(false, _peopleRange, value, out _studentParliament, this);
+        }
+        
+        private string _flagGroup = "";
+        public string FlagGroup
+        {
+            get => _flagGroup;
+            set => Validator.ValidateAndSet(false, _peopleRange, value, out _flagGroup, this);
+        }
+        
+        #endregion
+        #region School events
+        
+        private string _artisticEvents = "";
+        public string ArtisticEvents
+        {
+            get => _artisticEvents;
+            set => Validator.ValidateAndSet(false, _peopleRange, value, out _artisticEvents, this);
+        }
+        
+        private string _fairs = "";
+        public string Fairs
+        {
+            get => _fairs;
+            set => Validator.ValidateAndSet(false, _normalRange, value, out _fairs, this);
+        }
+        
+        private string _schoolEventsOrganization = "";
+        public string SchoolEventsOrganizations
+        {
+            get => _schoolEventsOrganization;
+            set => Validator.ValidateAndSet(false, _peopleRange, value, out _schoolEventsOrganization, this);
+        }
+        
+        private string _schoolEventsHelp = "";
+        public string SchoolEventsHelp
+        {
+            get => _schoolEventsHelp;
+            set => Validator.ValidateAndSet(false, _peopleRange, value, out _schoolEventsHelp, this);
+        }
+        
+        #endregion
+
         #endregion
 
         public Class()
@@ -177,9 +240,14 @@ namespace WielkaSowa.Models
             Points += (_wzor.ToInt() * MWzor + _bdb.ToInt() * MBdb + _db.ToInt() * MDb + _pop.ToInt() * MPop +
                        _nOdp.ToInt() * MNOdp + _nag.ToInt() * MNag);
 
+            Points += (_class1Day.ToInt() * MWK1 + _class2Day.ToInt() * MWK2 + _classActions.ToInt() * MPK);
+
+            Points += (_flagGroup.ToInt() * MPSz + _studentParliament.ToInt() * MPU);
+
+            Points += (_artisticEvents.ToInt() * MSzPA + _fairs.ToInt() * MSzKier +
+                       _schoolEventsOrganization.ToInt() * MSzOImp + _schoolEventsHelp.ToInt() * MSzPImp);
+
             Points += (_peTeacher.ToInt() + _sportsClubs.ToInt());
-            
-            
         }
 
         public override string ToString()

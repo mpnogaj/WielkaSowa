@@ -201,11 +201,14 @@
                             <HeaderedContentControl Header="Inicjatywy na rzecz klasy">
                                 <Grid RowDefinitions="*,*,*" ColumnDefinitions="Auto,*">
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Wycieczki 1-dniowe" />
-                                    <TextBox Classes="Val" Grid.Row="0" Grid.Column="1" />
+                                    <TextBox Classes="Val" Grid.Row="0" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.Class1Day}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Wycieczki 2 i więcej dniowe" />
-                                    <TextBox Classes="Val" Grid.Row="1" Grid.Column="1" />
+                                    <TextBox Classes="Val" Grid.Row="1" Grid.Column="1"
+                                             Text="{CompiledBinding Class.Class2Day}"/>
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Przedsięwzięcia klasowe" />
-                                    <TextBox Classes="Val" Grid.Row="2" Grid.Column="1" />
+                                    <TextBox Classes="Val" Grid.Row="2" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.ClassActions}"/>
                                 </Grid>
                             </HeaderedContentControl>
                             <HeaderedContentControl Header="Inicjatywy na rzecz środowiska pozaszkolnego">
@@ -226,21 +229,27 @@
                             <HeaderedContentControl Header="Zaangażowanie w imprezy szkolne">
                                 <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*">
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Program artystyczny" />
-                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1"
+                                             Text="{CompiledBinding Class.ArtisticEvents}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Kiermasze" />
-                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.Fairs}"/>
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Organizacja imprez szkolnych" />
-                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.SchoolEventsOrganizations}"/>
                                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Pomoc w organizacji imprez szkolnych" />
-                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1"
+                                             Text="{CompiledBinding Class.SchoolEventsHelp}"/>
                                 </Grid>
                             </HeaderedContentControl>
                             <HeaderedContentControl Header="Udział w agendach szkolnych">
                                 <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Parlament Uczniowski" />
-                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.StudentParliament}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Poczet sztandarowy" />
-                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1"
+                                             Text="{CompiledBinding Class.FlagGroup}"/>
                                 </Grid>
                             </HeaderedContentControl>
                         </WrapPanel>
