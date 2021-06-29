@@ -7,12 +7,16 @@ namespace WielkaSowa.Helpers
     {
         public static bool IsNumber(this string a)
         {
-            return a.All(char.IsDigit);
+            // Convert to 0
+            if (a.Length == 0) return true;
+            return a.All(char.IsDigit) && (a.Length == 1 || a[0] != '0');
         }
 
         public static bool IsRealNumber(this string a)
         {
-            return !a.Any((x) => !char.IsDigit(x) && (x != '.' && x != ','));
+            // Convert to 0.0
+            if (a.Length == 0) return true;
+            return !a.Any((x) => !char.IsDigit(x) && (x != '.' && x != ',')) && a[0] != '0';
         }
 
         public static bool IsInRange(this int x, double l, double r)

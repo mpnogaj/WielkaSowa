@@ -183,10 +183,12 @@
                             <HeaderedContentControl Header="Sport">
                                 <Grid RowDefinitions="*,*" ColumnDefinitions="*,*">
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Przyznane przez nauczycieli WF" />
-                                    <TextBox Classes="Poin" Grid.Row="0" Grid.Column="1" />
+                                    <TextBox Classes="Poin" Grid.Row="0" Grid.Column="1" 
+                                             Text="{CompiledBinding Class.PeTeacher}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0"
                                                Text="Udział w zawodach sportowych,&#x0a;poza szkolnym klubem sportowym" />
-                                    <TextBox Classes="Poin" Grid.Row="1" Grid.Column="1" />
+                                    <TextBox Classes="Poin" Grid.Row="1" Grid.Column="1"
+                                             Text="{CompiledBinding Class.SportsClubs}"/>
                                 </Grid>
                             </HeaderedContentControl>
                         </WrapPanel>

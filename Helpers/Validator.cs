@@ -11,10 +11,6 @@ namespace WielkaSowa.Helpers
         public const string InvalidType = "Nieprawidłowa wartość.";
         public const string OutOfRange = "Wartość poza zakresem.";
         #endregion
-        
-        #region Extension methods
-
-        #endregion
 
         #region Validation methods
 

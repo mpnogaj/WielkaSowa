@@ -12,10 +12,12 @@ namespace WielkaSowa.Models
         private readonly Pair<double, double> _percentRange = new(0, 100);
         private readonly Pair<double, double> _markRange = new(0, 6);
         private readonly Pair<double, double> _peopleRange = new(0, 40);
+        private readonly Pair<double, double> _peTeacherRange = new(0, double.MaxValue);
+        private readonly Pair<double, double> _sportsClubsRange = new(0, 100);
         private readonly List<PropertyInfo> _properties = new();
         
-        #region Points multiplayers
-
+        #region Points multipliers
+        // ReSharper disable InconsistentNaming
         private const int MWzor = 5;
         private const int MBdb = 3;
         private const int MDb = 1;
@@ -23,6 +25,43 @@ namespace WielkaSowa.Models
         private const int MNOdp = -2;
         private const int MNag = -15;
         
+        /* Under construction
+        private const int MOSz = 10;
+        private const int MOOk = 25;
+        private const int MOCt = 75;
+        private const int MOMn = 150;
+
+        private const int MKSz = 5;
+        private const int MKRj = 10;
+        private const int MKCt = 50;
+        private const int MKMn = 100; */
+        
+        // Wycieczki Klasowe 1-d
+        private const int MWK1 = 20;
+        // 2 dniowe i dluzsze
+        private const int MWK2 = 50;
+        // Przedsiewziecia klasowe
+        private const int MPK = 5;
+
+        private const int MSzPA = 10;
+        private const int MSzKier = 50;
+        // Organizacja
+        private const int MSzOImp = 50;
+        // Pomoc
+        private const int MSzPImp = 25;
+
+        // Parlament
+        private const int MPU = 40;
+        // Poczet sztandarowy
+        private const int MPSz = 20;
+
+        
+        private const int MPSzWol = 40;
+        private const int MPSzMRM = 40;
+        private const int MPSzHar = 40;
+        private const int MPSzPTH = 40;
+        private const int MPSzZbior = 20;
+        // ReSharper restore InconsistentNaming
         #endregion
 
         public ClassData ClassData { get; set; } = new();
@@ -91,7 +130,31 @@ namespace WielkaSowa.Models
             set => Validator.ValidateAndSet(false, _peopleRange, value, out _nag, this);
         }
         #endregion
+        #region Sport
+        
+        private string _peTeacher = "";
+        public string PeTeacher
+        {
+            get => _peTeacher;
+            set => Validator.ValidateAndSet(false, _peTeacherRange, value, out _peTeacher, this);
+        }
+        
+        private string _sportsClubs = "";
+        public string SportsClubs
+        {
+            get => _sportsClubs;
+            set => Validator.ValidateAndSet(false, _sportsClubsRange, value, out _sportsClubs, this);
+        }
+        
+        #endregion
 
+        private string _class1Day = "";
+        public string Class1Day
+        {
+            get => _class1Day;
+            set => Validator.ValidateAndSet(false, _peopleRange, value, out _class1Day, this);
+        }
+        
         #endregion
 
         public Class()
@@ -113,6 +176,10 @@ namespace WielkaSowa.Models
             // ReSharper disable once UselessBinaryOperation, -> multiplayer may change in future
             Points += (_wzor.ToInt() * MWzor + _bdb.ToInt() * MBdb + _db.ToInt() * MDb + _pop.ToInt() * MPop +
                        _nOdp.ToInt() * MNOdp + _nag.ToInt() * MNag);
+
+            Points += (_peTeacher.ToInt() + _sportsClubs.ToInt());
+            
+            
         }
 
         public override string ToString()
