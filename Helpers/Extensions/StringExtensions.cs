@@ -1,9 +1,9 @@
-using System;
+﻿using System;
 using System.Linq;
 
-namespace WielkaSowa.Helpers
+namespace WielkaSowa.Helpers.Extensions
 {
-    public static class ExtensionMethods
+    public static class StringExtensions
     {
         public static bool IsNumber(this string a)
         {
@@ -17,16 +17,6 @@ namespace WielkaSowa.Helpers
             // Convert to 0.0
             if (a.Length == 0) return true;
             return !a.Any((x) => !char.IsDigit(x) && (x != '.' && x != ',')) && a[0] != '0';
-        }
-
-        public static bool IsInRange(this int x, double l, double r)
-        {
-            return x <= r && x >= l;
-        }
-        
-        public static bool IsInRange(this double x, double l, double r)
-        {
-            return x <= r && x >= l;
         }
 
         public static double ToDouble(this string s)
@@ -45,7 +35,7 @@ namespace WielkaSowa.Helpers
 
         public static int ToInt(this string s)
         {
-            return (int) s.ToDouble();
+            return (int)s.ToDouble();
         }
     }
 }

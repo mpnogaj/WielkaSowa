@@ -1,4 +1,5 @@
 using System;
+using WielkaSowa.Helpers;
 using WielkaSowa.Models;
 
 namespace WielkaSowa.ViewModels
@@ -11,21 +12,26 @@ namespace WielkaSowa.ViewModels
             get => _class;
             set => SetProperty(ref _class, value);
         }
-        
-        public RelayCommand OkCommand { get; }
 
+        #region Commands
+        public RelayCommand OkCommand { get; }
         public RelayCommand CancelCommand { get; }
+        #endregion
 
         public ManageClassViewModel(Action<Class> onOk, Action? onCancel, Class? c = null)
         {
             _class = c ?? new Class();
+            Storage.Instance!.UpdateCalcs();
             OkCommand = new RelayCommand(() =>
             {
+                Storage.Instance!.UpdateCalcs();
                 onOk(Class);
                 Essentials.CloseTopWindow();
             });
             CancelCommand = new RelayCommand(() =>
             {
+                Storage.Instance!.Classes.Remove(_class);
+                Storage.Instance!.UpdateCalcs();
                 onCancel?.Invoke();
                 Essentials.CloseTopWindow();
             });

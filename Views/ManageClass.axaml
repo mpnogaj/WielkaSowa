@@ -258,9 +258,9 @@
             </TabControl>
         </HeaderedContentControl>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right">
+            <Button Width="75" HorizontalContentAlignment="Center" Content="Ok" Command="{CompiledBinding OkCommand}" />  
             <Button Width="75" HorizontalContentAlignment="Center" Content="Anuluj"
                     Command="{CompiledBinding CancelCommand}" />
-            <Button Width="75" HorizontalContentAlignment="Center" Content="Ok" Command="{CompiledBinding OkCommand}" />
         </StackPanel>
     </Grid>
 </Window>

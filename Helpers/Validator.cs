@@ -1,6 +1,7 @@
 using System;
 using System.Linq;
 using Avalonia.Data;
+using WielkaSowa.Helpers.Extensions;
 using WielkaSowa.Models;
 
 namespace WielkaSowa.Helpers
@@ -17,6 +18,12 @@ namespace WielkaSowa.Helpers
         public static void ValidateNumber(string s)
         {
             if (!s.IsNumber())
+                throw new DataValidationException(InvalidType);
+        }
+
+        public static void ValidateNumber(double s)
+        {
+            if(s != Math.Ceiling(s))
                 throw new DataValidationException(InvalidType);
         }
 
@@ -43,6 +50,22 @@ namespace WielkaSowa.Helpers
             else ValidateNumber(val);
             if(val != string.Empty)
                 ValidateRange(val.ToDouble(), r);
+            storage = val;
+            sender.RecalculatePoints();
+        }
+
+        public static void ValidateAndSet(Pair<double, double> r, int val, out int storage, Class sender)
+        {
+            ValidateRange(val, r);
+            storage = val;
+            sender.RecalculatePoints();
+        }
+
+        public static void ValidateAndSet(bool shouldBeReal, Pair<double, double> r, double val, out double storage, Class sender)
+        {
+            if (!shouldBeReal)
+                ValidateNumber(val);
+            ValidateRange(val, r);
             storage = val;
             sender.RecalculatePoints();
         }

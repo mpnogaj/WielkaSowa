@@ -1,7 +1,7 @@
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
-using WielkaSowa.Views;
+using WielkaSowa.Helpers;
 using WielkaSowa.Views;
 
 namespace WielkaSowa
@@ -11,6 +11,7 @@ namespace WielkaSowa
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            Storage.Init();
         }
 
         public override void OnFrameworkInitializationCompleted()

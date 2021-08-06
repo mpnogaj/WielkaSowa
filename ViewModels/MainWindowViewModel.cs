@@ -1,6 +1,7 @@
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
+using System.Diagnostics;
+using WielkaSowa.Helpers;
 using WielkaSowa.Models;
 using WielkaSowa.Views;
 
@@ -14,8 +15,6 @@ namespace WielkaSowa.ViewModels
             get => _classes; 
             set => SetProperty(ref _classes, value);
         }
-
-        private readonly List<Class> _workingList;
 
         private Class? _selectedClass;
         public Class? SelectedClass
@@ -31,76 +30,54 @@ namespace WielkaSowa.ViewModels
         public MainWindowViewModel()
         {
             _classes = new ObservableCollection<Class>();
-            _workingList = new List<Class>()
-            {
-                new()
-                {
-                    ClassData = new ClassData('A', "II", false),
-                    Points = 1000
-                },
-                new()
-                {
-                    ClassData = new ClassData('A', "II", false),
-                    Points = 500,
-                },
-                new()
-                {
-                    ClassData = new ClassData('A', "II", false),
-                    Points = 0
-                }
-            };
-            UpdatePlaces();
             AddClassCommand = new RelayCommand(() =>
             {
                 ManageClass manageClassWindow = new();
                 ManageClassViewModel manageClassViewModel = new((c) =>
                 {
-                    _workingList.Add(c);
-                    ReorderClasses();
-                    CommitChanges();
+                    ReorderAndUpdateUI();
                 }, () => manageClassWindow.Close());
                 manageClassWindow.DataContext = manageClassViewModel;
                 manageClassWindow.ShowDialog(Essentials.GetMainWindow());
             });
             ModifyClass = new RelayCommand(() =>
             {
-                var selectedClassIndex = _workingList.IndexOf(SelectedClass!);
                 ManageClass manageClassWindow = new();
-                var pointsChanged = false;
+                var prevPoints = SelectedClass!.Points;
                 ManageClassViewModel manageClassViewModel = new((c) =>
                 {
-                    if (c.Points != _workingList[selectedClassIndex].Points) pointsChanged = true;
-                    _workingList[selectedClassIndex] = c;
-                    CommitChanges();
-                    if (!pointsChanged) return;
-                    ReorderClasses();
-                    CommitChanges();
+                    if (prevPoints == c.Points)
+                    {
+                        UpdateUI();
+                    }
+                    else
+                    {
+                        ReorderAndUpdateUI();
+                    }
                 }, () => manageClassWindow.Close(), SelectedClass);
                 manageClassWindow.DataContext = manageClassViewModel;
                 manageClassWindow.ShowDialog(Essentials.GetMainWindow());
             }, () => SelectedClass != null);
             RemoveClassCommand = new RelayCommand(() =>
             {
-                _workingList.Remove(SelectedClass!);
-                UpdatePlaces();
-                CommitChanges();
+                Storage.Instance!.Classes.Remove(SelectedClass!);
+                Storage.Instance!.UpdateCalcs();
+                ReorderAndUpdateUI();
             }, () => SelectedClass != null);
-            
-            CommitChanges();
         }
 
         // Use this instead of sort because of time complexity (this -> O(n), sort -> O(n log n))
         // We need to find correct position only for one newly added element
         // We are assuming that list is sorted before adding new item
-        private void ReorderClasses()
+        private void ReorderAndUpdateUI()
         {
             try
             {
                 var i = 0;
-                var j = _workingList.Count - 1;
-                while (i < _workingList.Count - 1)
+                var j = Storage.Instance!.Classes.Count - 1;
+                while (i < Storage.Instance!.Classes.Count - 1)
                 {
-                    if (_workingList[i].Points < _workingList[j].Points)
+                    if (Storage.Instance!.Classes[i].Points < Storage.Instance!.Classes[j].Points)
                     {
                         SwapClasses(i, j);
                         break;
@@ -118,6 +95,7 @@ namespace WielkaSowa.ViewModels
                 }
 
                 UpdatePlaces();
+                UpdateUI();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -130,13 +108,13 @@ namespace WielkaSowa.ViewModels
             try
             {
                 var currPlace = 1;
-                var prevPoints = _workingList[0].Points;
-                _workingList[0].Place = 1;
-                for (var i = 1; i < _workingList.Count; i++)
+                var prevPoints = Storage.Instance!.Classes[0].Points;
+                Storage.Instance!.Classes[0].Place = 1;
+                for (var i = 1; i < Storage.Instance!.Classes.Count; i++)
                 {
-                    if (_workingList[i].Points != prevPoints) currPlace++;
-                    _workingList[i].Place = currPlace;
-                    prevPoints = _workingList[i].Points;
+                    if (Storage.Instance!.Classes[i].Points != prevPoints) currPlace++;
+                    Storage.Instance!.Classes[i].Place = currPlace;
+                    prevPoints = Storage.Instance!.Classes[i].Points;
                 }
             }
             catch (ArgumentOutOfRangeException)
@@ -147,16 +125,22 @@ namespace WielkaSowa.ViewModels
 
         private void SwapClasses(int left, int right)
         {
-            var temp = _workingList[left];
-            _workingList[left] = _workingList[right];
-            _workingList[right] = temp;
+            var temp = Storage.Instance!.Classes[left];
+            Storage.Instance!.Classes[left] = Storage.Instance!.Classes[right];
+            Storage.Instance!.Classes[right] = temp;
         }
 
         // Hacky way to update observable, but it works
-        private void CommitChanges()
+        private void UpdateUI()
         {
+            Debug.WriteLine("Updating UI. New UI: ");
+            foreach(Class c in Storage.Instance!.Classes)
+            {
+                Debug.WriteLine(c.ToString());
+            }
+            Debug.WriteLine("========");
             Classes = new ObservableCollection<Class>();
-            Classes = new ObservableCollection<Class>(_workingList);
+            Classes = new ObservableCollection<Class>(Storage.Instance!.Classes);
         }
     }
 }

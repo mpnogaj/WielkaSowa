@@ -3,12 +3,19 @@ using System.Collections.Generic;
 using System.Reflection;
 using System.Text;
 using WielkaSowa.Helpers;
+using WielkaSowa.Helpers.Calculators;
+using WielkaSowa.Helpers.Extensions;
 using WielkaSowa.ViewModels;
 
 namespace WielkaSowa.Models
 {
     public class Class : ViewModelBase
     {
+        // Dummy field to difrienciate instances
+        private readonly long _classId;
+        public long ClassId { get => _classId; }
+
+        private readonly Pair<double, double> _attendencePointsRange = new(0, 50);
         private readonly Pair<double, double> _percentRange = new(0, 100);
         private readonly Pair<double, double> _markRange = new(0, 6);
         private readonly Pair<double, double> _peopleRange = new(0, 40);
@@ -71,13 +78,24 @@ namespace WielkaSowa.Models
         public int Place { get; set; } = 1;
 
         #region Point properties
-        
+
         #region Attandance and marks
+        private int _attPoints = 0;
+        public int AttPoints 
+        { 
+            get => _attPoints;
+            set => Validator.ValidateAndSet(_attendencePointsRange, value, out _attPoints, this);
+        }
+
         private string _averageAtt = "";
         public string AverageAtt
         {
             get => _averageAtt;
-            set => Validator.ValidateAndSet(true, _percentRange, value, out _averageAtt, this);
+            set
+            {
+                Validator.ValidateAndSet(true, _percentRange, value, out _averageAtt, this);
+                AttendenceCalc.UpdatePoints();
+            }
         }
 
         private string _averageMark = "";
@@ -215,13 +233,15 @@ namespace WielkaSowa.Models
             get => _schoolEventsHelp;
             set => Validator.ValidateAndSet(false, _peopleRange, value, out _schoolEventsHelp, this);
         }
-        
+
         #endregion
 
         #endregion
 
         public Class()
         {
+            _classId = DateTime.Now.ToFileTime();
+            Storage.Instance!.Classes.Add(this);
             var properties = typeof(Class).GetProperties();
             foreach (var property in properties)
             {
@@ -235,6 +255,9 @@ namespace WielkaSowa.Models
         public void RecalculatePoints()
         {
             Points = 0;
+            // Attendence and mark points
+            Points += _attPoints;
+
             // Behaviour points
             // ReSharper disable once UselessBinaryOperation, -> multiplayer may change in future
             Points += (_wzor.ToInt() * MWzor + _bdb.ToInt() * MBdb + _db.ToInt() * MDb + _pop.ToInt() * MPop +
@@ -253,6 +276,18 @@ namespace WielkaSowa.Models
         public override string ToString()
         {
             return $"{Place}: {ClassData} - {Points}";
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is Class rhs &&
+                   ClassId == rhs.ClassId &&
+                   ClassData.Equals(rhs.ClassData);
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(ClassId, ClassData);
         }
     }
 
@@ -301,6 +336,19 @@ namespace WielkaSowa.Models
             sr.Append($"{AvailableLevels[LevelIndex]} {AvailableLetters[LetterIndex]}");
             if (!AfterPrimarySchool) sr.Append("(g)");
             return sr.ToString();
+        }
+
+        public override bool Equals(object? obj)
+        {
+            return obj is ClassData data &&
+                   LetterIndex == data.LetterIndex &&
+                   LevelIndex == data.LevelIndex &&
+                   AfterPrimarySchool == data.AfterPrimarySchool;
+        }
+
+        public override int GetHashCode()
+        {
+            return HashCode.Combine(LetterIndex, LevelIndex, AfterPrimarySchool);
         }
     }
 }
