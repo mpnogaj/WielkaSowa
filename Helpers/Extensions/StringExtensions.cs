@@ -1,22 +1,37 @@
 ﻿using System;
-using System.Linq;
 
 namespace WielkaSowa.Helpers.Extensions
 {
     public static class StringExtensions
     {
-        public static bool IsNumber(this string a)
+        public static bool IsNumber(this string s)
         {
             // Convert to 0
-            if (a.Length == 0) return true;
-            return a.All(char.IsDigit) && (a.Length == 1 || a[0] != '0');
+            if (s.Length == 0) return true;
+            try
+            {
+                Convert.ToInt32(s);
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
-        public static bool IsRealNumber(this string a)
+        public static bool IsRealNumber(this string s)
         {
             // Convert to 0.0
-            if (a.Length == 0) return true;
-            return !a.Any((x) => !char.IsDigit(x) && (x != '.' && x != ',')) && a[0] != '0';
+            if (s.Length == 0) return true;
+            try
+            {
+                Convert.ToDouble(s.Replace('.', ','));
+                return true;
+            }
+            catch
+            {
+                return false;
+            }
         }
 
         public static double ToDouble(this string s)

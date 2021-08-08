@@ -23,6 +23,7 @@ namespace WielkaSowa.Helpers
         public void UpdateCalcs()
         {
             AttendenceCalc.UpdatePoints();
+            MarkCalculator.UpdatePoints();
         }
 
         public static void Init()

@@ -48,7 +48,7 @@ namespace WielkaSowa.Helpers
         {
             if (shouldBeReal) ValidateRealNumber(val);
             else ValidateNumber(val);
-            if(val != string.Empty)
+            if (val != string.Empty)
                 ValidateRange(val.ToDouble(), r);
             storage = val;
             sender.RecalculatePoints();

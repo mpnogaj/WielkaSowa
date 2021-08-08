@@ -17,12 +17,13 @@ namespace WielkaSowa.Models
 
         private readonly Pair<double, double> _attendencePointsRange = new(0, 50);
         private readonly Pair<double, double> _percentRange = new(0, 100);
-        private readonly Pair<double, double> _markRange = new(0, 6);
+        private readonly Pair<double, double> _markPointsRange = new(0, 2000);
+        private readonly Pair<double, double> _markRange = new(1, 6);
         private readonly Pair<double, double> _peopleRange = new(0, 40);
         private readonly Pair<double, double> _normalRange = new(0, double.MaxValue);
         private readonly Pair<double, double> _sportsClubsRange = new(0, 100);
         private readonly List<PropertyInfo> _properties = new();
-        
+
         #region Points multipliers
         // ReSharper disable InconsistentNaming
         private const int MWzor = 5;
@@ -31,7 +32,7 @@ namespace WielkaSowa.Models
         private const int MPop = 0;
         private const int MNOdp = -2;
         private const int MNag = -15;
-        
+
         /* Under construction
         private const int MOSz = 10;
         private const int MOOk = 25;
@@ -42,7 +43,7 @@ namespace WielkaSowa.Models
         private const int MKRj = 10;
         private const int MKCt = 50;
         private const int MKMn = 100; */
-        
+
         // Wycieczki Klasowe 1-d
         private const int MWK1 = 20;
         // 2 dniowe i dluzsze
@@ -62,7 +63,7 @@ namespace WielkaSowa.Models
         // Poczet sztandarowy
         private const int MPSz = 20;
 
-        
+
         private const int MPSzWol = 40;
         private const int MPSzMRM = 40;
         private const int MPSzHar = 40;
@@ -81,8 +82,8 @@ namespace WielkaSowa.Models
 
         #region Attandance and marks
         private int _attPoints = 0;
-        public int AttPoints 
-        { 
+        public int AttPoints
+        {
             get => _attPoints;
             set => Validator.ValidateAndSet(_attendencePointsRange, value, out _attPoints, this);
         }
@@ -98,11 +99,25 @@ namespace WielkaSowa.Models
             }
         }
 
+        private int _markPoints;
+        public int MarkPoints
+        {
+            get => _markPoints;
+            set
+            {
+                Validator.ValidateAndSet(_markPointsRange, value, out _markPoints, this);
+            }
+        }
+
         private string _averageMark = "";
         public string AverageMark
         {
             get => _averageMark;
-            set => Validator.ValidateAndSet(true, _markRange, value, out _averageMark, this);
+            set
+            {
+                Validator.ValidateAndSet(true, _markRange, value, out _averageMark, this);
+                MarkCalculator.UpdatePoints();
+            }
         }
         #endregion
         #region Behaviour grades
@@ -256,7 +271,7 @@ namespace WielkaSowa.Models
         {
             Points = 0;
             // Attendence and mark points
-            Points += _attPoints;
+            Points += _attPoints + _markPoints;
 
             // Behaviour points
             // ReSharper disable once UselessBinaryOperation, -> multiplayer may change in future
