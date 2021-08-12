@@ -26,6 +26,7 @@ namespace WielkaSowa.ViewModels
         public RelayCommand AddClassCommand { get; }
         public RelayCommand ModifyClass { get; }
         public RelayCommand RemoveClassCommand { get; }
+		public RelayCommand OpenSettingsCommand { get; }
 
         public MainWindowViewModel()
         {
@@ -64,6 +65,11 @@ namespace WielkaSowa.ViewModels
                 Storage.Instance!.UpdateCalcs();
                 ReorderAndUpdateUI();
             }, () => SelectedClass != null);
+			OpenSettingsCommand = new RelayCommand(() => 
+			{
+				SettingsWindow settingsWindow = new();
+				settingsWindow.ShowDialog(Essentials.GetMainWindow());
+			});
         }
 
         // Use this instead of sort because of time complexity (this -> O(n), sort -> O(n log n))

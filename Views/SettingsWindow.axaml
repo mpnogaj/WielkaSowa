@@ -1,0 +1,23 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        xmlns:viewmodels="clr-namespace:WielkaSowa.ViewModels"
+        xmlns:models="clr-namespace:WielkaSowa.Models"
+		xmlns:helpers="clr-namespace:WielkaSowa.Helpers"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+        x:Class="WielkaSowa.Views.SettingsWindow"
+        x:DataType="viewmodels:MainWindowViewModel"
+        Title="Ustawienia"
+        Icon="/Assets/Icons/main.ico"
+        ExtendClientAreaToDecorationsHint="True"
+        TransparencyLevelHint="AcrylicBlur"
+        Background="#EE202120"
+		Width="375">
+	<Grid RowDefinitions="30,*,75" Margin="10, 0, 10, 0" HorizontalAlignment="Center">
+        <TextBlock Grid.Row="0" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Ustawienia"/>
+		<StackPanel Grid.Row="1" Margin="10, 15, 10, 0">
+			<CheckBox Content="Użyj prostego UI" IsChecked="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"/>
+		</StackPanel>
+    </Grid>
+</Window>
