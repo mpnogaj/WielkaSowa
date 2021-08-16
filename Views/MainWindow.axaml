@@ -4,16 +4,18 @@
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:WielkaSowa.ViewModels"
         xmlns:models="clr-namespace:WielkaSowa.Models"
+        xmlns:helpers="clr-namespace:WielkaSowa.Helpers"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WielkaSowa.Views.MainWindow"
         x:DataType="viewmodels:MainWindowViewModel"
+        x:Name="Window"
         Title="WielkaSowa"
         Icon="/Assets/Icons/main.ico"
-        ExtendClientAreaToDecorationsHint="True"
-        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
+        TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
         Background="#EE202120">
-    <Grid RowDefinitions="30,*,75" Margin="10, 0, 10, 0">
-        <TextBlock IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center" Text="Wielka sowa"/>
+    <Grid RowDefinitions="Auto,*,75" Margin="10, 0, 10, 0">
+        <TextBlock Grid.Row="0" Classes="Title" Text="Wielka sowa"/>
         <ListBox Grid.Row="1" Margin="0, 15, 0, 0" Items="{CompiledBinding Classes}" SelectedItem="{CompiledBinding SelectedClass}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Class}">

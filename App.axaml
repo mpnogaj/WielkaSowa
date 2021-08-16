@@ -1,7 +1,18 @@
 <Application xmlns="https://github.com/avaloniaui"
              xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+             xmlns:converters="clr-namespace:WielkaSowa.Converters"
+             xmlns:helpers="clr-namespace:WielkaSowa.Helpers"
              x:Class="WielkaSowa.App">
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
+        <Style Selector="TextBlock.Title">
+            <Setter Property="Margin" Value="0, 7, 0, 0"/>
+            <Setter Property="IsHitTestVisible" Value="False"/>
+            <Setter Property="HorizontalAlignment" Value="Center"/>
+            <Setter Property="IsVisible" Value="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"/>
+        </Style>
     </Application.Styles>
+    <Application.Resources>
+       <converters:BoolToWindowTransparencyLevel x:Key="BoolToWindowTransparencyLevelConverter"/>
+    </Application.Resources>
 </Application>
