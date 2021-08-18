@@ -28,7 +28,9 @@
                 <Button Content="Dodaj klase" Command="{CompiledBinding AddClassCommand}"/>
                 <Button Content="Modyfikuj klase" Command="{CompiledBinding ModifyClass}"/>
                 <Button Content="Usun klase" Command="{CompiledBinding RemoveClassCommand}"/>
-				<Button Content="Ustawienia" Command="{CompiledBinding OpenSettingsCommand}"/>
+				        <Button Content="Ustawienia" Command="{CompiledBinding OpenSettingsCommand}"/>
+                <Button Content="Zapisz dane" Command="{CompiledBinding SaveDataCommand}"/>
+                <Button Content="Otwórz plik z danymi" Command="{CompiledBinding OpenFileCommand}"/>
             </StackPanel>
             <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
                 <TextBlock Text="Code and design"/>

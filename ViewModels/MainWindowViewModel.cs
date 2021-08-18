@@ -1,6 +1,9 @@
+using Avalonia.Controls;
 using System;
+using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
+using System.IO;
 using WielkaSowa.Helpers;
 using WielkaSowa.Models;
 using WielkaSowa.Views;
@@ -12,7 +15,7 @@ namespace WielkaSowa.ViewModels
         private ObservableCollection<Class> _classes;
         public ObservableCollection<Class> Classes
         {
-            get => _classes; 
+            get => _classes;
             set => SetProperty(ref _classes, value);
         }
 
@@ -22,15 +25,18 @@ namespace WielkaSowa.ViewModels
             get => _selectedClass;
             set => SetProperty(ref _selectedClass, value);
         }
-        
+
         public RelayCommand AddClassCommand { get; }
         public RelayCommand ModifyClass { get; }
         public RelayCommand RemoveClassCommand { get; }
-		public RelayCommand OpenSettingsCommand { get; }
+        public RelayCommand OpenSettingsCommand { get; }
+        public AsyncRelayCommand OpenFileCommand { get; }
+        public AsyncRelayCommand SaveDataCommand { get; }
 
         public MainWindowViewModel()
         {
-            _classes = new ObservableCollection<Class>();
+            _classes = new();
+            Storage.Instance!.ClassesUpdated += (sender, e) => UpdateUI(); 
             AddClassCommand = new RelayCommand(() =>
             {
                 ManageClass manageClassWindow = new();
@@ -70,6 +76,40 @@ namespace WielkaSowa.ViewModels
 				SettingsWindow settingsWindow = new();
 				settingsWindow.ShowDialog(Essentials.GetMainWindow());
 			});
+            OpenFileCommand = new AsyncRelayCommand(async () =>
+            {
+                OpenFileDialog dialog = new()
+                {
+                    AllowMultiple = false,
+                    Title = "Otwórz plik z danymi",
+                    Filters = Constants.DataFileFilters
+                };
+                var res = await dialog.ShowAsync(Essentials.GetMainWindow());
+                if (res.Length > 0 && !string.IsNullOrEmpty(res[0]))
+                {
+                    await Storage.Instance.OpenAndLoadFile(res[0]);
+                }
+            });
+            SaveDataCommand = new AsyncRelayCommand(async () =>
+            {
+                if (File.Exists(Storage.Instance.CurrentFile))
+                {
+                    await Storage.Instance.SaveToFile();
+                }
+                else
+                {
+                    SaveFileDialog dialog = new()
+                    {
+                        Filters = Constants.DataFileFilters,
+                        Title = "Zapisz dane do pliku"
+                    };
+                    string res = await dialog.ShowAsync(Essentials.GetMainWindow());
+                    if (!string.IsNullOrEmpty(res))
+                    {
+                        await Storage.Instance.SaveToFile(res);
+                    }
+                }
+            });
         }
 
         // Use this instead of sort because of time complexity (this -> O(n), sort -> O(n log n))
