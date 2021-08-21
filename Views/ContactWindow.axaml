@@ -1,0 +1,30 @@
+<Window xmlns="https://github.com/avaloniaui"
+        xmlns:x="http://schemas.microsoft.com/winfx/2006/xaml"
+        xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
+        xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
+        mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
+		xmlns:helpers="clr-namespace:WielkaSowa.Helpers"
+		xmlns:viewmodels="clr-namespace:WielkaSowa.ViewModels"
+        x:Class="WielkaSowa.Views.ContactWindow"
+		x:DataType="viewmodels:ContactViewModel"
+        Title="Kontakt"
+		Icon="/Assets/Icons/main.ico"
+        ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
+        TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
+        Background="#EE202120"
+        Width="350"
+		Height="175"
+		CanResize="False"
+		WindowStartupLocation="CenterOwner">
+	<Grid RowDefinitions="Auto,*,50" Margin="10, 0, 10, 0" HorizontalAlignment="Stretch">
+		<TextBlock Grid.Row="0" Classes="Title" Text="Kontakt"/>
+		<StackPanel Grid.Row="1" Spacing="5">
+			<TextBlock Text="Wielka sowa" FontSize="18" FontWeight="Bold"/>
+			<TextBlock Text="Autor: Marcin Nogaj"/>
+			<TextBlock Text="Email: mpnogaj@gmail.com"/>
+			<TextBlock Text="GitHub: mpnogaj"/>
+		</StackPanel>
+		<Button Grid.Row="2" Width="75" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Content="Ok"
+				Command="{CompiledBinding CloseWindowCommand}"/>
+	</Grid>
+</Window>

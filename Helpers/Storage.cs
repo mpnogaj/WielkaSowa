@@ -16,7 +16,7 @@ namespace WielkaSowa.Helpers
         private FileStream? _file;
         public static Storage? Instance = null;
 
-        public event EventHandler ClassesUpdated;
+        public event EventHandler? ClassesUpdated;
 
         private List<Class> _classes;
         public List<Class> Classes
@@ -38,14 +38,13 @@ namespace WielkaSowa.Helpers
 
         private void OpenFile(string? filePath)
         {
-            CloseFile();
+            _file?.Close();
             if (filePath != null)
             {
                 CurrentFile = filePath;
             }
             if (CurrentFile == string.Empty || !File.Exists(CurrentFile)) return;
-            _file = new FileStream(CurrentFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.ReadWrite, 1024, true);
-            _file.Lock(0, _file.Length);
+            _file = new FileStream(CurrentFile, FileMode.OpenOrCreate, FileAccess.ReadWrite, FileShare.None, 1024, true);
         }
 
         private async Task LoadFileContent()
@@ -65,25 +64,18 @@ namespace WielkaSowa.Helpers
             }
         }
 
-        private async Task WriteToFile(string content, FileStream file)
+        private static async Task WriteToFile(string content, FileStream file)
         {
-
             byte[] bytes = Encoding.UTF8.GetBytes(content);
             file.Seek(0, SeekOrigin.Begin);
             await file.WriteAsync(bytes, 0, bytes.Length);
         }
 
-        private async Task<string> ReadFromFile(FileStream file)
+        private static async Task<string> ReadFromFile(FileStream file)
         {
             byte[] bytes = new byte[file.Length];
             await file.ReadAsync(bytes, 0, (int)file.Length);
             return Encoding.UTF8.GetString(bytes);
-        }
-
-        public void CloseFile()
-        {
-            _file?.Unlock(0, _file.Length);
-            _file?.Close();
         }
 
         public async Task OpenAndLoadFile(string? filePath = null)
@@ -95,16 +87,16 @@ namespace WielkaSowa.Helpers
         public async Task SaveToFile(string? filePath = null)
         {
             string json = JsonConvert.SerializeObject(Classes);
-            if (_file != null)
-            {
-                await WriteToFile(json, _file);
-            }
-            else if (filePath != null)
+            if (filePath != null)
             {
                 var file = File.Create(filePath);
                 await WriteToFile(json, file);
                 file.Close();
                 OpenFile(filePath);
+            }
+            else if (_file != null)
+            {
+                await WriteToFile(json, _file);
             }
         }
 

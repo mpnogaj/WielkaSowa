@@ -44,28 +44,32 @@ namespace WielkaSowa.Helpers
                 throw new DataValidationException(OutOfRange);
         }
 
-        public static void ValidateAndSet(bool shouldBeReal, Pair<double, double> r, string val, out string storage, Class sender)
+        public static void ValidateAndSet(bool shouldBeReal, Pair<double, double>? r, string val, out string storage, Class sender)
         {
-            if (shouldBeReal) ValidateRealNumber(val);
-            else ValidateNumber(val);
-            if (val != string.Empty)
+            if (shouldBeReal) 
+                ValidateRealNumber(val);
+            else 
+                ValidateNumber(val);
+            if (val != string.Empty && r != null)
                 ValidateRange(val.ToDouble(), r);
             storage = val;
             sender.RecalculatePoints();
         }
 
-        public static void ValidateAndSet(Pair<double, double> r, int val, out int storage, Class sender)
+        public static void ValidateAndSet(Pair<double, double>? r, int val, out int storage, Class sender)
         {
-            ValidateRange(val, r);
+            if(r != null) 
+                ValidateRange(val, r);
             storage = val;
             sender.RecalculatePoints();
         }
 
-        public static void ValidateAndSet(bool shouldBeReal, Pair<double, double> r, double val, out double storage, Class sender)
+        public static void ValidateAndSet(bool shouldBeReal, Pair<double, double>? r, double val, out double storage, Class sender)
         {
             if (!shouldBeReal)
                 ValidateNumber(val);
-            ValidateRange(val, r);
+            if(r != null) 
+                ValidateRange(val, r);
             storage = val;
             sender.RecalculatePoints();
         }

@@ -1,7 +1,6 @@
-﻿using System.Threading.Tasks;
-using System.Windows.Input;
+﻿using System.Windows.Input;
 
-namespace WielkaSowa.ViewModels
+namespace WielkaSowa.ViewModels.Commands.Async
 {
     public interface IAsyncCommand<T> : ICommand
     {

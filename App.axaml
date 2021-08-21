@@ -6,7 +6,7 @@
     <Application.Styles>
         <FluentTheme Mode="Dark"/>
         <Style Selector="TextBlock.Title">
-            <Setter Property="Margin" Value="0, 7, 0, 0"/>
+            <Setter Property="Margin" Value="0, 7, 0, 7"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
             <Setter Property="HorizontalAlignment" Value="Center"/>
             <Setter Property="IsVisible" Value="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"/>

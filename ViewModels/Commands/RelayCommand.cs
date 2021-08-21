@@ -1,8 +1,7 @@
-using System;
-using System.Windows.Input;
 using Avalonia.Threading;
+using System.Windows.Input;
 
-namespace WielkaSowa.ViewModels
+namespace WielkaSowa.ViewModels.Commands
 {
     public class RelayCommand<T> : ICommand
     {
@@ -65,7 +64,7 @@ namespace WielkaSowa.ViewModels
         {
             if (parameter == null || parameter.GetType() != typeof(T))
                 throw new InvalidOperationException();
-            _execute((T) parameter);
+            _execute((T)parameter);
         }
 
         private void CanExecuteChangedTimer_Tick(object? sender, EventArgs e)
@@ -82,7 +81,7 @@ namespace WielkaSowa.ViewModels
 
         public event EventHandler? CanExecuteChanged;
         private readonly Action _execute;
-        private readonly Func<bool>? _canExecute ;
+        private readonly Func<bool>? _canExecute;
 
         #endregion
 

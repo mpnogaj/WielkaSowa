@@ -15,17 +15,16 @@ namespace WielkaSowa.Models
         private readonly long _classId;
         public long ClassId { get => _classId; }
 
-        private readonly Pair<double, double> _attendencePointsRange = new(0, 50);
         private readonly Pair<double, double> _percentRange = new(0, 100);
-        private readonly Pair<double, double> _markPointsRange = new(0, 2000);
         private readonly Pair<double, double> _markRange = new(1, 6);
         private readonly Pair<double, double> _peopleRange = new(0, 40);
-        private readonly Pair<double, double> _normalRange = new(0, double.MaxValue);
+        private readonly Pair<double, double> _infiniteRange = new(0, Int32.MaxValue);
         private readonly Pair<double, double> _sportsClubsRange = new(0, 100);
         private readonly List<PropertyInfo> _properties = new();
 
         #region Points multipliers
         // ReSharper disable InconsistentNaming
+        // Zachowanie
         private const int MWzor = 5;
         private const int MBdb = 3;
         private const int MDb = 1;
@@ -33,16 +32,17 @@ namespace WielkaSowa.Models
         private const int MNOdp = -2;
         private const int MNag = -15;
 
-        /* Under construction
+        // Olimpiady
         private const int MOSz = 10;
         private const int MOOk = 25;
         private const int MOCt = 75;
         private const int MOMn = 150;
 
+        // Konkursy
         private const int MKSz = 5;
         private const int MKRj = 10;
         private const int MKCt = 50;
-        private const int MKMn = 100; */
+        private const int MKMn = 100;
 
         // Wycieczki Klasowe 1-d
         private const int MWK1 = 20;
@@ -51,11 +51,13 @@ namespace WielkaSowa.Models
         // Przedsiewziecia klasowe
         private const int MPK = 5;
 
+        // Programy artystyczne
         private const int MSzPA = 10;
+        // Kiermasze
         private const int MSzKier = 50;
-        // Organizacja
+        // Organizacja imprez
         private const int MSzOImp = 50;
-        // Pomoc
+        // Pomoc w organnizacji imprez
         private const int MSzPImp = 25;
 
         // Parlament
@@ -63,29 +65,29 @@ namespace WielkaSowa.Models
         // Poczet sztandarowy
         private const int MPSz = 20;
 
-
+        // Wolontariaty, harcerstwo itp.
         private const int MPSzWol = 40;
         private const int MPSzMRM = 40;
         private const int MPSzHar = 40;
         private const int MPSzPTH = 40;
-        private const int MPSzZbior = 20;
+        private const int MPSzZbior = 25;
         // ReSharper restore InconsistentNaming
         #endregion
 
         public ClassData ClassData { get; set; } = new();
 
-        private int _points;
-        public int Points { get => _points; set => SetProperty(ref _points, value); }
+        private long _points;
+        public long Points { get => _points; set => SetProperty(ref _points, value); }
         public int Place { get; set; } = 1;
 
         #region Point properties
 
-        #region Attandance and marks
+        #region Obecnosc i srednia ocen
         private int _attPoints = 0;
         public int AttPoints
         {
             get => _attPoints;
-            set => Validator.ValidateAndSet(_attendencePointsRange, value, out _attPoints, this);
+            set => Validator.ValidateAndSet(null, value, out _attPoints, this);
         }
 
         private string _averageAtt = "";
@@ -105,7 +107,17 @@ namespace WielkaSowa.Models
             get => _markPoints;
             set
             {
-                Validator.ValidateAndSet(_markPointsRange, value, out _markPoints, this);
+                Validator.ValidateAndSet(null, value, out _markPoints, this);
+            }
+        }
+
+        private int _markBonusPoints;
+        public int MarkBonusPoints
+        {
+            get => _markBonusPoints;
+            set
+            {
+                Validator.ValidateAndSet(null, value, out _markBonusPoints, this);
             }
         }
 
@@ -120,7 +132,7 @@ namespace WielkaSowa.Models
             }
         }
         #endregion
-        #region Behaviour grades
+        #region Zachowanie
         private string _wzor = "";
         public string Wzor
         {
@@ -163,13 +175,72 @@ namespace WielkaSowa.Models
             set => Validator.ValidateAndSet(false, _peopleRange, value, out _nag, this);
         }
         #endregion
+        #region Olimpiady i konkursy
+        #region Olimpiady
+        private string _schoolOlympic = "";
+        public string SchoolOlympic
+        {
+            get => _schoolOlympic;
+            set => Validator.ValidateAndSet(true, _infiniteRange, value, out _schoolOlympic, this);
+        }
+
+        private string _regionalOlympic = "";
+        public string RegionalOlympic
+        {
+            get => _regionalOlympic;
+            set => Validator.ValidateAndSet(true, _infiniteRange, value, out _regionalOlympic, this);
+        }
+
+        private string _centralOlympic = "";
+        public string CentralOlympic
+        {
+            get => _centralOlympic;
+            set => Validator.ValidateAndSet(true, _infiniteRange, value, out _centralOlympic, this);
+        }
+
+        private string _internationalOlympic = "";
+        public string InternationalOlympic
+        {
+            get => _internationalOlympic;
+            set => Validator.ValidateAndSet(true, _infiniteRange, value, out _internationalOlympic, this);
+        }
+        #endregion
+        #region Konkursy
+        private string _schoolContest = "";
+        public string SchoolContest
+        {
+            get => _schoolContest;
+            set => Validator.ValidateAndSet(true, _infiniteRange, value, out _schoolContest, this);
+        }
+
+        private string _regionalContest = "";
+        public string RegionalContest
+        {
+            get => _regionalContest;
+            set => Validator.ValidateAndSet(true, _infiniteRange, value, out _regionalContest, this);
+        }
+
+        private string _centralContest = "";
+        public string CentralContest
+        {
+            get => _centralContest;
+            set => Validator.ValidateAndSet(true, _infiniteRange, value, out _centralContest, this);
+        }
+
+        private string _internationalContest = "";
+        public string InternationalContest
+        {
+            get => _internationalContest;
+            set => Validator.ValidateAndSet(true, _infiniteRange, value, out _internationalContest, this);
+        }
+        #endregion
+        #endregion
         #region Sport
-        
         private string _peTeacher = "";
         public string PeTeacher
         {
             get => _peTeacher;
-            set => Validator.ValidateAndSet(false, _normalRange, value, out _peTeacher, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _peTeacher, this);
         }
         
         private string _sportsClubs = "";
@@ -178,77 +249,110 @@ namespace WielkaSowa.Models
             get => _sportsClubs;
             set => Validator.ValidateAndSet(false, _sportsClubsRange, value, out _sportsClubs, this);
         }
-        
         #endregion
-        #region Class actions
+        #region Aktywnosci klasowe
         private string _class1Day = "";
         public string Class1Day
         {
             get => _class1Day;
-            set => Validator.ValidateAndSet(false, _peopleRange, value, out _class1Day, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _class1Day, this);
         }
 
         private string _class2Day = "";
         public string Class2Day
         {
             get => _class2Day;
-            set => Validator.ValidateAndSet(false, _peopleRange, value, out _class2Day, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _class2Day, this);
         }
         
         private string _classActions = "";
         public string ClassActions
         {
             get => _classActions;
-            set => Validator.ValidateAndSet(false, _normalRange, value, out _classActions, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _classActions, this);
         }
         #endregion
-        #region School agendas
+        #region Agendy szkolne
         
         private string _studentParliament = "";
         public string StudentParliament
         {
             get => _studentParliament;
-            set => Validator.ValidateAndSet(false, _peopleRange, value, out _studentParliament, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _studentParliament, this);
         }
         
         private string _flagGroup = "";
         public string FlagGroup
         {
             get => _flagGroup;
-            set => Validator.ValidateAndSet(false, _peopleRange, value, out _flagGroup, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _flagGroup, this);
         }
         
         #endregion
-        #region School events
-        
+        #region Wydarzenia szkolne
         private string _artisticEvents = "";
         public string ArtisticEvents
         {
             get => _artisticEvents;
-            set => Validator.ValidateAndSet(false, _peopleRange, value, out _artisticEvents, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _artisticEvents, this);
         }
         
         private string _fairs = "";
         public string Fairs
         {
             get => _fairs;
-            set => Validator.ValidateAndSet(false, _normalRange, value, out _fairs, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _fairs, this);
         }
         
         private string _schoolEventsOrganization = "";
         public string SchoolEventsOrganizations
         {
             get => _schoolEventsOrganization;
-            set => Validator.ValidateAndSet(false, _peopleRange, value, out _schoolEventsOrganization, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _schoolEventsOrganization, this);
         }
         
         private string _schoolEventsHelp = "";
         public string SchoolEventsHelp
         {
             get => _schoolEventsHelp;
-            set => Validator.ValidateAndSet(false, _peopleRange, value, out _schoolEventsHelp, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _schoolEventsHelp, this);
+        }
+        #endregion
+        #region Wolontariat, harcerstwo
+        private string _volunteeringPoints = "";
+        public string VolunteeringPoints
+        {
+            get => _volunteeringPoints;
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _volunteeringPoints, this);
         }
 
+        private string _mrmPoints = "";
+        public string MRMPoints
+        {
+            get => _mrmPoints;
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _mrmPoints, this);
+        }
+
+        private string _scoutingPoints = "";
+        public string ScoutingPoints
+        {
+            get => _scoutingPoints;
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _scoutingPoints, this);
+        }
+
+        private string _phtPoints = "";
+        public string PHTPoints
+        {
+            get => _phtPoints;
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _phtPoints, this);
+        }
+
+        private string _meetingPoints = "";
+        public string MeetingPoints
+        {
+            get => _meetingPoints;
+            set => Validator.ValidateAndSet(false, _peopleRange, value, out _meetingPoints, this);
+        }
         #endregion
 
         #endregion
@@ -270,22 +374,56 @@ namespace WielkaSowa.Models
         public void RecalculatePoints()
         {
             Points = 0;
-            // Attendence and mark points
-            Points += _attPoints + _markPoints;
+            Points += 
+                _attPoints + 
+                _markPoints + 
+                _markBonusPoints;
 
-            // Behaviour points
-            // ReSharper disable once UselessBinaryOperation, -> multiplayer may change in future
-            Points += (_wzor.ToInt() * MWzor + _bdb.ToInt() * MBdb + _db.ToInt() * MDb + _pop.ToInt() * MPop +
-                       _nOdp.ToInt() * MNOdp + _nag.ToInt() * MNag);
+            Points += 
+                _wzor.ToInt() * MWzor + 
+                _bdb.ToInt() * MBdb + 
+                _db.ToInt() * MDb + 
+                _pop.ToInt() * MPop + 
+                _nOdp.ToInt() * MNOdp + 
+                _nag.ToInt() * MNag;
 
-            Points += (_class1Day.ToInt() * MWK1 + _class2Day.ToInt() * MWK2 + _classActions.ToInt() * MPK);
+            Points +=
+                _schoolOlympic.ToInt() * MOSz +
+                _regionalOlympic.ToInt() * MOOk +
+                _centralOlympic.ToInt() * MOCt +
+                _internationalOlympic.ToInt() * MOMn;
 
-            Points += (_flagGroup.ToInt() * MPSz + _studentParliament.ToInt() * MPU);
+            Points +=
+                _schoolContest.ToInt() * MKSz +
+                _regionalContest.ToInt() * MKRj +
+                _centralContest.ToInt() * MKCt +
+                _internationalContest.ToInt() * MKMn;
 
-            Points += (_artisticEvents.ToInt() * MSzPA + _fairs.ToInt() * MSzKier +
-                       _schoolEventsOrganization.ToInt() * MSzOImp + _schoolEventsHelp.ToInt() * MSzPImp);
+            Points += 
+                _class1Day.ToInt() * MWK1 + 
+                _class2Day.ToInt() * MWK2 +
+                _classActions.ToInt() * MPK;
 
-            Points += (_peTeacher.ToInt() + _sportsClubs.ToInt());
+            Points += 
+                _flagGroup.ToInt() * MPSz + 
+                _studentParliament.ToInt() * MPU;
+
+            Points += 
+                _artisticEvents.ToInt() * MSzPA + 
+                _fairs.ToInt() * MSzKier + 
+                _schoolEventsOrganization.ToInt() * MSzOImp + 
+                _schoolEventsHelp.ToInt() * MSzPImp;
+
+            Points += 
+                _peTeacher.ToInt() + 
+                _sportsClubs.ToInt();
+
+            Points += 
+                _volunteeringPoints.ToInt() * MPSzWol +
+                _mrmPoints.ToInt() * MPSzMRM +
+                _scoutingPoints.ToInt() * MPSzHar +
+                _phtPoints.ToInt() * MPSzPTH +
+                _meetingPoints.ToInt() * MPSzZbior;
         }
 
         public override string ToString()

@@ -1,11 +1,12 @@
-using WielkaSowa.ViewModels.Commands;
+﻿using WielkaSowa.ViewModels.Commands;
 
 namespace WielkaSowa.ViewModels
 {
-    public class SettingsViewModel
+    public class ContactViewModel : ViewModelBase
     {
-        RelayCommand CloseWindowCommand { get; }
-        public SettingsViewModel()
+        public RelayCommand CloseWindowCommand { get; }
+
+        public ContactViewModel()
         {
             CloseWindowCommand = new RelayCommand(() =>
             {

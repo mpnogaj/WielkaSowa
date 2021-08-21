@@ -6,6 +6,8 @@ using System.Diagnostics;
 using System.IO;
 using WielkaSowa.Helpers;
 using WielkaSowa.Models;
+using WielkaSowa.ViewModels.Commands;
+using WielkaSowa.ViewModels.Commands.Async;
 using WielkaSowa.Views;
 
 namespace WielkaSowa.ViewModels
@@ -31,7 +33,11 @@ namespace WielkaSowa.ViewModels
         public RelayCommand RemoveClassCommand { get; }
         public RelayCommand OpenSettingsCommand { get; }
         public AsyncRelayCommand OpenFileCommand { get; }
-        public AsyncRelayCommand SaveDataCommand { get; }
+        public AsyncRelayCommand SaveCommand { get; }
+        public AsyncRelayCommand SaveAsCommand { get; }
+        public RelayCommand OpenHelp { get; }
+        public RelayCommand OpenIssues { get; }
+        public RelayCommand OpenContact { get; }
 
         public MainWindowViewModel()
         {
@@ -90,7 +96,7 @@ namespace WielkaSowa.ViewModels
                     await Storage.Instance.OpenAndLoadFile(res[0]);
                 }
             });
-            SaveDataCommand = new AsyncRelayCommand(async () =>
+            SaveCommand = new AsyncRelayCommand(async () =>
             {
                 if (File.Exists(Storage.Instance.CurrentFile))
                 {
@@ -98,18 +104,30 @@ namespace WielkaSowa.ViewModels
                 }
                 else
                 {
-                    SaveFileDialog dialog = new()
-                    {
-                        Filters = Constants.DataFileFilters,
-                        Title = "Zapisz dane do pliku"
-                    };
-                    string res = await dialog.ShowAsync(Essentials.GetMainWindow());
-                    if (!string.IsNullOrEmpty(res))
-                    {
-                        await Storage.Instance.SaveToFile(res);
-                    }
+                    await SaveAs();
                 }
             });
+            SaveAsCommand = new AsyncRelayCommand(async () => 
+            {
+                await SaveAs();
+            });
+            OpenHelp = new RelayCommand(() => Essentials.OpenUrl("https://github.com/mpnogaj/WielkaSowa/wiki"));
+            OpenIssues = new RelayCommand(() => Essentials.OpenUrl("https://github.com/mpnogaj/WielkaSowa/issues"));
+            OpenContact = new RelayCommand(() => new ContactWindow().ShowDialog(Essentials.GetMainWindow()));
+        }
+
+        private async Task SaveAs()
+        {
+            SaveFileDialog dialog = new()
+            {
+                Filters = Constants.DataFileFilters,
+                Title = "Zapisz dane do pliku"
+            };
+            string res = await dialog.ShowAsync(Essentials.GetMainWindow());
+            if (!string.IsNullOrEmpty(res))
+            {
+                await Storage.Instance!.SaveToFile(res);
+            }
         }
 
         // Use this instead of sort because of time complexity (this -> O(n), sort -> O(n log n))
@@ -140,7 +158,6 @@ namespace WielkaSowa.ViewModels
                     j--;
                 }
 
-                UpdatePlaces();
                 UpdateUI();
             }
             catch (ArgumentOutOfRangeException)
@@ -179,6 +196,7 @@ namespace WielkaSowa.ViewModels
         // Hacky way to update observable, but it works
         private void UpdateUI()
         {
+            UpdatePlaces();
             Debug.WriteLine("Updating UI. New UI: ");
             foreach(Class c in Storage.Instance!.Classes)
             {

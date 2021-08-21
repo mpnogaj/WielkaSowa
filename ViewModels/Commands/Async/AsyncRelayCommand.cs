@@ -1,14 +1,12 @@
 ﻿using Avalonia.Threading;
-using System;
-using System.Threading.Tasks;
 using System.Windows.Input;
 
-namespace WielkaSowa.ViewModels
+namespace WielkaSowa.ViewModels.Commands.Async
 {
     public class AsyncRelayCommand<T> : IAsyncCommand<T>
     {
         public event EventHandler? CanExecuteChanged;
-        private readonly Func<T, Task>? _execute = null;
+        private readonly Func<T, Task> _execute;
         private readonly Func<bool>? _canExecute = null;
         private readonly DispatcherTimer _canExecuteChangedTimer;
         private bool _isExecuting = false;
@@ -17,7 +15,7 @@ namespace WielkaSowa.ViewModels
 
         public AsyncRelayCommand(Func<T, Task> execute, Func<bool> canExecute)
         {
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
             _canExecuteChangedTimer = new DispatcherTimer
             {
@@ -68,7 +66,7 @@ namespace WielkaSowa.ViewModels
         void ICommand.Execute(object? parameter)
         {
             if (parameter == null) return;
-            ExecuteAsync((T)parameter);
+            Task.Run(() => ExecuteAsync((T)parameter));
         }
 
         #endregion
@@ -77,8 +75,8 @@ namespace WielkaSowa.ViewModels
     public class AsyncRelayCommand : IAsyncCommand
     {
         public event EventHandler? CanExecuteChanged;
-        private readonly Func<Task> _execute = null;
-        private readonly Func<bool> _canExecute = null;
+        private readonly Func<Task> _execute;
+        private readonly Func<bool>? _canExecute = null;
         private readonly DispatcherTimer _canExecuteChangedTimer;
         private bool _isExecuting = false;
 
@@ -86,7 +84,7 @@ namespace WielkaSowa.ViewModels
 
         public AsyncRelayCommand(Func<Task> execute, Func<bool> canExecute)
         {
-            _execute = execute;
+            _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
             _canExecuteChangedTimer = new DispatcherTimer
             {
@@ -134,7 +132,7 @@ namespace WielkaSowa.ViewModels
 
         void ICommand.Execute(object? parameter)
         {
-            ExecuteAsync();
+            Task.Run(() => ExecuteAsync());
         }
 
         #endregion

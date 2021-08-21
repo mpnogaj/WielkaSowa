@@ -20,7 +20,7 @@ namespace WielkaSowa.Helpers.Calculators
                 // Check if ex aequo
                 if (prev != c.First) currPlace++;
                 Storage.Instance!.Classes[c.Second].AttPoints = AttPoints[Math.Min(currPlace, 3)];
-                prev = c.Second;
+                prev = c.First;
             }
         }
 

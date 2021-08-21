@@ -9,33 +9,47 @@
         x:Class="WielkaSowa.Views.MainWindow"
         x:DataType="viewmodels:MainWindowViewModel"
         x:Name="Window"
-        Title="WielkaSowa"
+        Title="Wielka sowa"
         Icon="/Assets/Icons/main.ico"
         ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
         TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
         Background="#EE202120">
-    <Grid RowDefinitions="Auto,*,75" Margin="10, 0, 10, 0">
+    <Grid DockPanel.Dock="Top" RowDefinitions="Auto,Auto,*" Margin="10, 0, 10, 10">
         <TextBlock Grid.Row="0" Classes="Title" Text="Wielka sowa"/>
-        <ListBox Grid.Row="1" Margin="0, 15, 0, 0" Items="{CompiledBinding Classes}" SelectedItem="{CompiledBinding SelectedClass}">
+		<Menu Grid.Row="1">
+			<MenuItem Header="Plik">
+				<MenuItem Header="Otwórz plik" Command="{CompiledBinding OpenFileCommand}"/>
+				<Separator/>
+				<MenuItem Header="Zapisz" Command="{CompiledBinding SaveCommand}"/>
+				<MenuItem Header="Zapisz jako" Command="{CompiledBinding SaveAsCommand}"/>
+			</MenuItem>
+			<MenuItem Header="Klasy">
+				<MenuItem Header="Dodaj klase" Command="{CompiledBinding AddClassCommand}"/>
+				<MenuItem Header="Modyfikuj klase" Command="{CompiledBinding ModifyClass}"/>
+				<MenuItem Header="Usuń klase" Command="{CompiledBinding RemoveClassCommand}"/>
+			</MenuItem>
+			<MenuItem Header="Narzędzia">
+				<MenuItem Header="Ustawienia" Command="{CompiledBinding OpenSettingsCommand}"/>
+			</MenuItem>
+			<MenuItem Header="Pomoc">
+				<MenuItem Header="Wyświetl pomoc" Command="{CompiledBinding OpenHelp}"/>
+				<MenuItem Header="Zgłoś problem" Command="{CompiledBinding OpenIssues}"/>
+				<MenuItem Header="Kontakt" Command="{CompiledBinding OpenContact}"/>
+			</MenuItem>
+		</Menu>
+        <ListBox Grid.Row="2" Margin="0, 5, 0, 0" Items="{CompiledBinding Classes}" SelectedItem="{CompiledBinding SelectedClass}">
             <ListBox.ItemTemplate>
                 <DataTemplate DataType="{x:Type models:Class}">
                     <TextBlock Text="{Binding}"/>
                 </DataTemplate>
             </ListBox.ItemTemplate>
+		    <ListBox.ContextMenu>
+			    <ContextMenu>
+			        <MenuItem Header="Dodaj klase" Command="{CompiledBinding AddClassCommand}"/>
+		    		<MenuItem Header="Modyfikuj klase" Command="{CompiledBinding ModifyClass}"/>
+		   			<MenuItem Header="Usuń klase" Command="{CompiledBinding RemoveClassCommand}"/>
+	    		</ContextMenu>
+    		</ListBox.ContextMenu>
         </ListBox>
-        <Grid Grid.Row="2" ColumnDefinitions="*, Auto">
-            <StackPanel Grid.Column="0" Orientation="Horizontal" HorizontalAlignment="Center" Spacing="15">
-                <Button Content="Dodaj klase" Command="{CompiledBinding AddClassCommand}"/>
-                <Button Content="Modyfikuj klase" Command="{CompiledBinding ModifyClass}"/>
-                <Button Content="Usun klase" Command="{CompiledBinding RemoveClassCommand}"/>
-				        <Button Content="Ustawienia" Command="{CompiledBinding OpenSettingsCommand}"/>
-                <Button Content="Zapisz dane" Command="{CompiledBinding SaveDataCommand}"/>
-                <Button Content="Otwórz plik z danymi" Command="{CompiledBinding OpenFileCommand}"/>
-            </StackPanel>
-            <StackPanel Grid.Column="1" Orientation="Vertical" VerticalAlignment="Center">
-                <TextBlock Text="Code and design"/>
-                <TextBlock FontWeight="Bold" Text="MARCIN NOGAJ"/>
-            </StackPanel>
-        </Grid>
-    </Grid>
+	</Grid>
 </Window>

@@ -70,9 +70,21 @@ namespace WielkaSowa.Helpers.Calculators
 
         private static void AssignPoints(List<Interval> intervals)
         {
-            foreach(Class c in Storage.Instance!.Classes)
+            double currMax = -1;
+            int maxPos = -1;
+            for(int i = 0; i < Storage.Instance!.Classes.Count; i++)
             {
+                Class c = Storage.Instance!.Classes[i];
                 c.MarkPoints = GetPoints(intervals, c);
+                if(c.AverageMark.ToDouble() > currMax)
+                {
+                    currMax = c.AverageMark.ToDouble();
+                    maxPos = i;
+                }
+            }
+            if(maxPos >= 0)
+            {
+                Storage.Instance.Classes[maxPos].MarkBonusPoints = 20;
             }
         }
 

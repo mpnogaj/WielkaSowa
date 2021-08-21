@@ -1,8 +1,21 @@
 ﻿<Project Sdk="Microsoft.NET.Sdk">
     <PropertyGroup>
         <OutputType>WinExe</OutputType>
-        <TargetFramework>net5.0</TargetFramework>
+        <TargetFramework>net6.0</TargetFramework>
         <Nullable>enable</Nullable>
+        <NoWin32Manifest>true</NoWin32Manifest>
+        <ErrorReport>none</ErrorReport>
+        <SignAssembly>False</SignAssembly>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Debug|AnyCPU'">
+      <PlatformTarget>AnyCPU</PlatformTarget>
+      <WarningLevel>5</WarningLevel>
+      <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
+    </PropertyGroup>
+    <PropertyGroup Condition="'$(Configuration)|$(Platform)'=='Release|AnyCPU'">
+      <PlatformTarget>AnyCPU</PlatformTarget>
+      <WarningLevel>5</WarningLevel>
+      <TreatWarningsAsErrors>False</TreatWarningsAsErrors>
     </PropertyGroup>
     <ItemGroup>
         <PackageReference Include="Avalonia" Version="0.10.7" />
@@ -18,5 +31,8 @@
     </ItemGroup>
     <ItemGroup>
       <AvaloniaResource Include="Assets\**" />
+    </ItemGroup>
+    <ItemGroup>
+      <Folder Include="Assets\Images\" />
     </ItemGroup>
 </Project>

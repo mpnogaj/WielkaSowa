@@ -3,14 +3,16 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:WielkaSowa.ViewModels"
+		xmlns:helpers="clr-namespace:WielkaSowa.Helpers"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WielkaSowa.Views.ManageClass"
         x:DataType="viewmodels:ManageClassViewModel"
-        TransparencyLevelHint="AcrylicBlur"
+        ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
+        TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
         Background="#EE202120"
-        ExtendClientAreaToDecorationsHint="True"
         Icon="/Assets/Icons/main.ico"
-        Title="Zarządzaj klasą">
+        Title="Zarządzaj klasą"
+		WindowStartupLocation="CenterOwner">
     <Window.Styles>
         <Style Selector="HeaderedContentControl">
             <Setter Property="Margin" Value="0, 15, 0, 0" />
@@ -75,10 +77,9 @@
             <Setter Property="VerticalAlignment" Value="Center" />
         </Style>
     </Window.Styles>
-    <Grid RowDefinitions="30,Auto,*,75" Margin="10, 0, 10, 0">
-        <TextBlock Grid.Row="0" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Text="Zarządzaj klasą" />
-        <HeaderedContentControl Grid.Row="1" Header="Informacje generalne">
+    <Grid RowDefinitions="Auto,Auto,*,50" Margin="10, 0, 10, 0">
+        <TextBlock Grid.Row="0" Classes="Title" Text="Zarządzaj klasą" />
+        <HeaderedContentControl Grid.Row="1" Header="Informacje generalne" Margin="0, 0, 0, 0">
             <StackPanel Orientation="Horizontal" Spacing="15">
                 <StackPanel.Styles>
                     <Style Selector="TextBlock">
@@ -159,25 +160,33 @@
                             <HeaderedContentControl Header="Olimpiady">
                                 <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="Auto,*">
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Szkolne" />
-                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1"
+											 Text="{CompiledBinding Class.SchoolOlympic}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Okręgowe" />
-                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" 
+											 Text="{CompiledBinding Class.RegionalOlympic}"/>
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Centralne" />
-                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" 
+											 Text="{CompiledBinding Class.CentralOlympic}"/>
                                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Międzynarodowe" />
-                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" 
+											 Text="{CompiledBinding Class.InternationalOlympic}"/>
                                 </Grid>
                             </HeaderedContentControl>
                             <HeaderedContentControl Header="Konkursy">
                                 <Grid RowDefinitions="*,*,*,*" ColumnDefinitions="*,*">
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Szkolne" />
-                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1"
+											 Text="{CompiledBinding Class.SchoolContest}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Rejonowe" />
-                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" 
+											 Text="{CompiledBinding Class.RegionalContest}"/>
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="Centralne" />
-                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" 
+											 Text="{CompiledBinding Class.CentralContest}"/>
                                     <TextBlock Grid.Row="3" Grid.Column="0" Text="Międzynarodowe" />
-                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1"
+											 Text="{CompiledBinding Class.InternationalContest}"/>
                                 </Grid>
                             </HeaderedContentControl>
                             <HeaderedContentControl Header="Sport">
@@ -214,16 +223,21 @@
                             <HeaderedContentControl Header="Inicjatywy na rzecz środowiska pozaszkolnego">
                                 <Grid RowDefinitions="*,*,*,*,*" ColumnDefinitions="*,*">
                                     <TextBlock Grid.Row="0" Grid.Column="0" Text="Wolontariat" />
-                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="0" Grid.Column="1"
+											 Text="{CompiledBinding Class.VolunteeringPoints}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="MRM" />
-                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" 
+											 Text="{CompiledBinding Class.MRMPoints}"/>
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="ZHP i ZHR" />
-                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" 
+											 Text="{CompiledBinding Class.ScoutingPoints}"/>
                                     <TextBlock Grid.Row="3" Grid.Column="0"
-                                               Text="Działalność w stowarzyszeniu lub&#x0a;organizacji pożytku publicznego" />
-                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" />
+                                               Text="Działalność w stowarzyszeniu lub (PTH)&#x0a;organizacji pożytku publicznego" />
+                                    <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" 
+											 Text="{CompiledBinding Class.PHTPoints}"/>
                                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Zbiórki, organizacje itp." />
-                                    <TextBox Classes="Pers" Grid.Row="4" Grid.Column="1" />
+                                    <TextBox Classes="Pers" Grid.Row="4" Grid.Column="1" 
+											 Text="{CompiledBinding Class.MeetingPoints}"/>
                                 </Grid>
                             </HeaderedContentControl>
                             <HeaderedContentControl Header="Zaangażowanie w imprezy szkolne">

@@ -8,41 +8,22 @@
         xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WielkaSowa.Views.SettingsWindow"
-        x:DataType="viewmodels:MainWindowViewModel"
-        x:Name="SWindow"
+        x:DataType="viewmodels:SettingsViewModel"
         Title="Ustawienia"
         Icon="/Assets/Icons/main.ico"
         ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
         TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
         Background="#EE202120"
-        Width="375">
-    <!--<i:Interaction.Behaviors>
-        <ia:DataTriggerBehavior Binding="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
-                                ComparisonCondition="Equal" Value="False">
-            <ia:ChangePropertyAction TargetObject="{Binding #Window}"
-                                     PropertyName="ExtendClientAreaToDecorationsHint" Value="True" />
-            <ia:ChangePropertyAction TargetObject="{Binding #Window}" PropertyName="TransparencyLevelHint"
-                                     Value="AcrylicBlur" />
-            <ia:ChangePropertyAction TargetObject="{Binding #Title}" PropertyName="IsVisible"
-                                     Value="True"/>
-        </ia:DataTriggerBehavior>
-        <ia:DataTriggerBehavior Binding="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
-                                ComparisonCondition="Equal" Value="True">
-            <ia:ChangePropertyAction TargetObject="{Binding #Window}"
-                                     PropertyName="ExtendClientAreaToDecorationsHint" Value="False" />
-            <ia:ChangePropertyAction TargetObject="{Binding #Window}" PropertyName="TransparencyLevelHint"
-                                     Value="None" />
-            <ia:ChangePropertyAction TargetObject="{Binding #Title}" PropertyName="IsVisible"
-                                     Value="False"/>
-        </ia:DataTriggerBehavior>
-    </i:Interaction.Behaviors>-->
-    <Grid RowDefinitions="Auto,*,75" Margin="10, 0, 10, 0" HorizontalAlignment="Center">
-        <TextBlock Grid.Row="0" x:Name="Title" Margin="0, 7, 0, 0" IsHitTestVisible="False" VerticalAlignment="Center" HorizontalAlignment="Center"
-                   Text="Ustawienia"/>
-        <StackPanel Grid.Row="1" Margin="10, 15, 10, 0">
+        Width="375"
+		Height="400"
+		WindowStartupLocation="CenterOwner">
+    <Grid RowDefinitions="Auto,*,50" Margin="10, 0, 10, 0" HorizontalAlignment="Stretch">
+        <TextBlock Grid.Row="0" Classes="Title" Text="Ustawienia"/>
+        <StackPanel Grid.Row="1">
             <CheckBox Content="Użyj prostego UI"
                       ToolTip.Tip="Włączenie tej opcji może spowodować wzrost wydajności na słabszych komputerach"
                       IsChecked="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}" />
         </StackPanel>
+		<Button Grid.Row="2" Width="75" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Content="Ok"/>
     </Grid>
 </Window>
