@@ -87,7 +87,11 @@ namespace WielkaSowa.Models
         public int AttPoints
         {
             get => _attPoints;
-            set => Validator.ValidateAndSet(null, value, out _attPoints, this);
+            set
+            {
+                Validator.ValidateAndSet(null, value, out _attPoints, this);
+                OnPropertyChanged();
+            }
         }
 
         private string _averageAtt = "";
@@ -108,6 +112,7 @@ namespace WielkaSowa.Models
             set
             {
                 Validator.ValidateAndSet(null, value, out _markPoints, this);
+                OnPropertyChanged();
             }
         }
 
@@ -118,6 +123,7 @@ namespace WielkaSowa.Models
             set
             {
                 Validator.ValidateAndSet(null, value, out _markBonusPoints, this);
+                OnPropertyChanged();
             }
         }
 
@@ -133,6 +139,13 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Zachowanie
+        private int _behaviourPoints = 0;
+        public int BehaviourPoints
+        {
+            get => _behaviourPoints;
+            set => SetProperty(ref _behaviourPoints, value);
+        }
+
         private string _wzor = "";
         public string Wzor
         {
@@ -177,6 +190,13 @@ namespace WielkaSowa.Models
         #endregion
         #region Olimpiady i konkursy
         #region Olimpiady
+        private int _olympicPoints = 0;
+        public int OlympicPoints
+        {
+            get => _olympicPoints;
+            set => SetProperty(ref _olympicPoints, value);
+        }
+
         private string _schoolOlympic = "";
         public string SchoolOlympic
         {
@@ -206,6 +226,13 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Konkursy
+        private int _contestPoints = 0;
+        public int ContestPoints
+        {
+            get => _contestPoints;
+            set => SetProperty(ref _contestPoints, value);
+        }
+
         private string _schoolContest = "";
         public string SchoolContest
         {
@@ -236,6 +263,13 @@ namespace WielkaSowa.Models
         #endregion
         #endregion
         #region Sport
+        private int _pePoints = 0;
+        public int PePoints
+        {
+            get => _pePoints;
+            set => SetProperty(ref _pePoints, value);
+        }
+
         private string _peTeacher = "";
         public string PeTeacher
         {
@@ -251,6 +285,13 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Aktywnosci klasowe
+        private int _classActivitiesPoints = 0;
+        public int ClassActivitiesPoints
+        {
+            get => _classActivitiesPoints;
+            set => SetProperty(ref _classActivitiesPoints, value);
+        }
+
         private string _class1Day = "";
         public string Class1Day
         {
@@ -273,7 +314,13 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Agendy szkolne
-        
+        private int _agendasPoints = 0;
+        public int AgendasPoints
+        {
+            get => _agendasPoints;
+            set => SetProperty(ref _agendasPoints, value);
+        }
+
         private string _studentParliament = "";
         public string StudentParliament
         {
@@ -287,9 +334,16 @@ namespace WielkaSowa.Models
             get => _flagGroup;
             set => Validator.ValidateAndSet(false, _infiniteRange, value, out _flagGroup, this);
         }
-        
+
         #endregion
         #region Wydarzenia szkolne
+        private int _schoolEventsPoints;
+        public int SchoolEventsPoints
+        {
+            get => _schoolEventsPoints;
+            set => SetProperty(ref _schoolEventsPoints, value);
+        }
+
         private string _artisticEvents = "";
         public string ArtisticEvents
         {
@@ -319,6 +373,13 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Wolontariat, harcerstwo
+        private int _volunteeringActionsPoints;
+        public int VolunteeringActionsPoints
+        {
+            get => _volunteeringActionsPoints;
+            set => SetProperty(ref _volunteeringActionsPoints, value);
+        }
+
         private string _volunteeringPoints = "";
         public string VolunteeringPoints
         {
@@ -373,13 +434,7 @@ namespace WielkaSowa.Models
 
         public void RecalculatePoints()
         {
-            Points = 0;
-            Points += 
-                _attPoints + 
-                _markPoints + 
-                _markBonusPoints;
-
-            Points += 
+            BehaviourPoints = 
                 _wzor.ToInt() * MWzor + 
                 _bdb.ToInt() * MBdb + 
                 _db.ToInt() * MDb + 
@@ -387,43 +442,60 @@ namespace WielkaSowa.Models
                 _nOdp.ToInt() * MNOdp + 
                 _nag.ToInt() * MNag;
 
-            Points +=
+            OlympicPoints =
                 _schoolOlympic.ToInt() * MOSz +
                 _regionalOlympic.ToInt() * MOOk +
                 _centralOlympic.ToInt() * MOCt +
                 _internationalOlympic.ToInt() * MOMn;
 
-            Points +=
+            ContestPoints =
                 _schoolContest.ToInt() * MKSz +
                 _regionalContest.ToInt() * MKRj +
                 _centralContest.ToInt() * MKCt +
                 _internationalContest.ToInt() * MKMn;
 
-            Points += 
+            PePoints =
+                _peTeacher.ToInt() +
+                _sportsClubs.ToInt();
+
+            ClassActivitiesPoints =
                 _class1Day.ToInt() * MWK1 + 
                 _class2Day.ToInt() * MWK2 +
                 _classActions.ToInt() * MPK;
 
-            Points += 
+            AgendasPoints = 
                 _flagGroup.ToInt() * MPSz + 
                 _studentParliament.ToInt() * MPU;
 
-            Points += 
+            SchoolEventsPoints = 
                 _artisticEvents.ToInt() * MSzPA + 
                 _fairs.ToInt() * MSzKier + 
                 _schoolEventsOrganization.ToInt() * MSzOImp + 
                 _schoolEventsHelp.ToInt() * MSzPImp;
 
-            Points += 
-                _peTeacher.ToInt() + 
-                _sportsClubs.ToInt();
-
-            Points += 
+            VolunteeringActionsPoints = 
                 _volunteeringPoints.ToInt() * MPSzWol +
                 _mrmPoints.ToInt() * MPSzMRM +
                 _scoutingPoints.ToInt() * MPSzHar +
                 _phtPoints.ToInt() * MPSzPTH +
                 _meetingPoints.ToInt() * MPSzZbior;
+
+            Points = 0;
+
+            Points += 
+                BehaviourPoints + 
+                OlympicPoints +
+                ContestPoints +
+                PePoints +
+                ClassActivitiesPoints +
+                AgendasPoints +
+                SchoolEventsPoints +
+                VolunteeringActionsPoints;
+
+            Points +=
+                _attPoints +
+                _markPoints +
+                _markBonusPoints;
         }
 
         public override string ToString()

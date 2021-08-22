@@ -215,7 +215,7 @@
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="Wycieczki 2 i więcej dniowe" />
                                     <TextBox Classes="Val" Grid.Row="1" Grid.Column="1"
                                              Text="{CompiledBinding Class.Class2Day}"/>
-                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Przedsięwzięcia klasowe" />
+                                    <TextBlock Grid.Row="2" Grid.Column="0" Text="Przedsięwzięcia klasowe (imprezy)" />
                                     <TextBox Classes="Val" Grid.Row="2" Grid.Column="1" 
                                              Text="{CompiledBinding Class.ClassActions}"/>
                                 </Grid>
@@ -269,6 +269,52 @@
                         </WrapPanel>
                     </ScrollViewer>
                 </TabItem>
+				<TabItem Header="Podsumowanie">
+					<ScrollViewer HorizontalScrollBarVisibility="Disabled" VerticalScrollBarVisibility="Auto"
+                                  Margin="0,10,0,0">
+						<WrapPanel Orientation="Horizontal">
+							<HeaderedContentControl Header="Oceny, frekfencja i zachowanie">
+								<Grid RowDefinitions="*,*,*" ColumnDefinitions="Auto,*">
+									<TextBlock Grid.Row="0" Grid.Column="0" Text="Średnia ocen: " />
+									<TextBlock Classes="Points" Grid.Row="0" Grid.Column="1">
+										<TextBlock.Text>
+											<MultiBinding Mode="OneWay" StringFormat="{}{0} + {1}">
+												<CompiledBinding Path="Class.MarkPoints"/>
+												<CompiledBinding Path="Class.MarkBonusPoints"/>
+											</MultiBinding>
+										</TextBlock.Text>
+									</TextBlock>
+									<TextBlock Grid.Row="1" Grid.Column="0" Text="Frekwencja: " />
+									<TextBlock Classes="Points" Grid.Row="1" Grid.Column="1" Text="{CompiledBinding Class.AttPoints}"/>
+									<TextBlock Grid.Row="2" Grid.Column="0" Text="Zachowanie: " />
+									<TextBlock Classes="Points" Grid.Row="2" Grid.Column="1" Text="{CompiledBinding Class.BehaviourPoints}"/>
+								</Grid>
+							</HeaderedContentControl>
+							<HeaderedContentControl Header="Konkursy, olimpiady i sport">
+								<Grid RowDefinitions="*,*,*" ColumnDefinitions="Auto,*">
+									<TextBlock Grid.Row="0" Grid.Column="0" Text="Olimpiady: " />
+									<TextBlock Classes="Points" Grid.Row="0" Grid.Column="1" Text="{CompiledBinding Class.OlympicPoints}"/>
+									<TextBlock Grid.Row="1" Grid.Column="0" Text="Konkursy: " />
+									<TextBlock Classes="Points" Grid.Row="1" Grid.Column="1" Text="{CompiledBinding Class.ContestPoints}"/>
+									<TextBlock Grid.Row="2" Grid.Column="0" Text="Sport: " />
+									<TextBlock Classes="Points" Grid.Row="2" Grid.Column="1" Text="{CompiledBinding Class.PePoints}"/>
+								</Grid>
+							</HeaderedContentControl>
+							<HeaderedContentControl Header="Inicjatywy i imprezy">
+								<Grid RowDefinitions="*,*,*,*" ColumnDefinitions="Auto,*">
+									<TextBlock Grid.Row="0" Grid.Column="0" Text="Inicjatywy na rzecz klasy: " />
+									<TextBlock Classes="Points" Grid.Row="0" Grid.Column="1" Text="{CompiledBinding Class.ClassActivitiesPoints}"/>
+									<TextBlock Grid.Row="1" Grid.Column="0" Text="Inicjatywy na rzecz środowiska pozaszkolnego: " />
+									<TextBlock Classes="Points" Grid.Row="1" Grid.Column="1" Text="{CompiledBinding Class.VolunteeringActionsPoints}"/>
+									<TextBlock Grid.Row="2" Grid.Column="0" Text="Zaangażowanie w imprezy szkolne: " />
+									<TextBlock Classes="Points" Grid.Row="2" Grid.Column="1" Text="{CompiledBinding Class.SchoolEventsPoints}"/>
+									<TextBlock Grid.Row="3" Grid.Column="0" Text="Udział w agendach szkolnych: " />
+									<TextBlock Classes="Points" Grid.Row="3" Grid.Column="1" Text="{CompiledBinding Class.AgendasPoints}"/>
+								</Grid>
+							</HeaderedContentControl>
+						</WrapPanel>
+					</ScrollViewer>
+				</TabItem>
             </TabControl>
         </HeaderedContentControl>
         <StackPanel Grid.Row="3" Orientation="Horizontal" Spacing="15" HorizontalAlignment="Right">
