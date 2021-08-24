@@ -22,7 +22,13 @@
         <StackPanel Grid.Row="1" Spacing="3">
             <CheckBox Content="Użyj prostego UI"
                       ToolTip.Tip="Włączenie tej opcji może spowodować wzrost wydajności na słabszych komputerach"
-                      IsChecked="{CompiledBinding Temp.SimpleUI }" />
+                      IsChecked="{CompiledBinding Temp.SimpleUI}" />
+			<Rectangle Height="7"/>
+			<TextBlock Text="Motyw"/>
+			<StackPanel Orientation="Horizontal" Spacing="10">
+				<RadioButton IsChecked="{CompiledBinding !Temp.DarkTheme}" Content="Jasny"/>
+			    <RadioButton IsChecked="{CompiledBinding Temp.DarkTheme}" Content="Ciemny"/>
+			</StackPanel>
         </StackPanel>
 		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="15">
 			<StackPanel.Styles>
@@ -35,6 +41,5 @@
 			<Button Content="Przywróć domyślne" Command="{CompiledBinding RevertToDefaultCommand}"/>
 			<Button Content="Anuluj" Command="{CompiledBinding CancelCommand}"/>
 		</StackPanel>
-		
     </Grid>
 </Window>
