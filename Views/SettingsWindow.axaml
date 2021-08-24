@@ -11,19 +11,30 @@
         x:DataType="viewmodels:SettingsViewModel"
         Title="Ustawienia"
         Icon="/Assets/Icons/main.ico"
-        ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
-        TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
         Background="#EE202120"
+		ExtendClientAreaToDecorationsHint="{DynamicResource ComplexUI}"
+        TransparencyLevelHint="{DynamicResource TransparencyHint}"
         Width="375"
 		Height="400"
 		WindowStartupLocation="CenterOwner">
     <Grid RowDefinitions="Auto,*,50" Margin="10, 0, 10, 0" HorizontalAlignment="Stretch">
         <TextBlock Grid.Row="0" Classes="Title" Text="Ustawienia"/>
-        <StackPanel Grid.Row="1">
+        <StackPanel Grid.Row="1" Spacing="3">
             <CheckBox Content="Użyj prostego UI"
                       ToolTip.Tip="Włączenie tej opcji może spowodować wzrost wydajności na słabszych komputerach"
-                      IsChecked="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}" />
+                      IsChecked="{CompiledBinding Temp.SimpleUI }" />
         </StackPanel>
-		<Button Grid.Row="2" Width="75" HorizontalAlignment="Right" HorizontalContentAlignment="Center" Content="Ok"/>
+		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="15">
+			<StackPanel.Styles>
+				<Style Selector="Button">
+					<Setter Property="MinWidth" Value="75"/>
+				    <Setter Property="HorizontalContentAlignment" Value="Center"/>
+				</Style>
+			</StackPanel.Styles>
+			<Button Content="Zastosuj" Command="{CompiledBinding SaveCommand}"/>
+			<Button Content="Przywróć domyślne" Command="{CompiledBinding RevertToDefaultCommand}"/>
+			<Button Content="Anuluj" Command="{CompiledBinding CancelCommand}"/>
+		</StackPanel>
+		
     </Grid>
 </Window>

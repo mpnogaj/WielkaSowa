@@ -14,7 +14,7 @@ namespace WielkaSowa.Helpers
     {
         public string CurrentFile { get; private set; }
         private FileStream? _file;
-        public static Storage? Instance = null;
+        public static Storage? Instance { get; private set; } = null;
 
         public event EventHandler? ClassesUpdated;
 
@@ -68,13 +68,13 @@ namespace WielkaSowa.Helpers
         {
             byte[] bytes = Encoding.UTF8.GetBytes(content);
             file.Seek(0, SeekOrigin.Begin);
-            await file.WriteAsync(bytes, 0, bytes.Length);
+            await file.WriteAsync(bytes);
         }
 
         private static async Task<string> ReadFromFile(FileStream file)
         {
             byte[] bytes = new byte[file.Length];
-            await file.ReadAsync(bytes, 0, (int)file.Length);
+            await file.ReadAsync(bytes.AsMemory(0, (int)file.Length));
             return Encoding.UTF8.GetString(bytes);
         }
 
@@ -100,7 +100,7 @@ namespace WielkaSowa.Helpers
             }
         }
 
-        public void UpdateCalcs()
+        public static void UpdateCalcs()
         {
             AttendenceCalc.UpdatePoints();
             MarkCalculator.UpdatePoints();

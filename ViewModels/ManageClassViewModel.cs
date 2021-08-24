@@ -21,17 +21,17 @@ namespace WielkaSowa.ViewModels
         public ManageClassViewModel(Action<Class> onOk, Action? onCancel, Class? c = null)
         {
             _class = c ?? new Class();
-            Storage.Instance!.UpdateCalcs();
+            Storage.UpdateCalcs();
             OkCommand = new RelayCommand(() =>
             {
-                Storage.Instance!.UpdateCalcs();
+                Storage.UpdateCalcs();
                 onOk(Class);
                 Essentials.CloseTopWindow();
             });
             CancelCommand = new RelayCommand(() =>
             {
                 Storage.Instance!.Classes.Remove(_class);
-                Storage.Instance!.UpdateCalcs();
+                Storage.UpdateCalcs();
                 onCancel?.Invoke();
                 Essentials.CloseTopWindow();
             });

@@ -26,12 +26,12 @@ namespace WielkaSowa.Converters
             return ToBoolean((WindowTransparencyLevel) value);
         }
 
-        private static bool ToBoolean(WindowTransparencyLevel value)
+        public static bool ToBoolean(WindowTransparencyLevel value)
         {
             return value == WindowTransparencyLevel.None;
         }
 
-        private static WindowTransparencyLevel ToWindowTransparencyLevel(bool value)
+        public static WindowTransparencyLevel ToWindowTransparencyLevel(bool value)
         {
             return value ? WindowTransparencyLevel.None : WindowTransparencyLevel.AcrylicBlur;
         }

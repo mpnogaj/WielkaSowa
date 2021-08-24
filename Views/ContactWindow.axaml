@@ -9,12 +9,12 @@
 		x:DataType="viewmodels:ContactViewModel"
         Title="Kontakt"
 		Icon="/Assets/Icons/main.ico"
-        ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
-        TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
         Background="#EE202120"
         Width="350"
 		Height="175"
 		CanResize="False"
+		ExtendClientAreaToDecorationsHint="{DynamicResource ComplexUI}"
+        TransparencyLevelHint="{DynamicResource TransparencyHint}"
 		WindowStartupLocation="CenterOwner">
 	<Grid RowDefinitions="Auto,*,50" Margin="10, 0, 10, 0" HorizontalAlignment="Stretch">
 		<TextBlock Grid.Row="0" Classes="Title" Text="Kontakt"/>

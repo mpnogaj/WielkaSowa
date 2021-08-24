@@ -11,8 +11,8 @@
         x:Name="Window"
         Title="Wielka sowa"
         Icon="/Assets/Icons/main.ico"
-        ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
-        TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
+        ExtendClientAreaToDecorationsHint="{DynamicResource ComplexUI}"
+        TransparencyLevelHint="{DynamicResource TransparencyHint}"
         Background="#EE202120">
     <Grid DockPanel.Dock="Top" RowDefinitions="Auto,Auto,*" Margin="10, 0, 10, 10">
         <TextBlock Grid.Row="0" Classes="Title" Text="Wielka sowa"/>

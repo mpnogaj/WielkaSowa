@@ -32,7 +32,7 @@ namespace WielkaSowa.ViewModels.Commands
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
 
-            DispatcherTimer canExecuteChangedTimer = new DispatcherTimer
+            DispatcherTimer canExecuteChangedTimer = new()
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 50),
             };

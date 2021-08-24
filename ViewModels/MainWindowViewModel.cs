@@ -74,7 +74,7 @@ namespace WielkaSowa.ViewModels
             RemoveClassCommand = new RelayCommand(() =>
             {
                 Storage.Instance!.Classes.Remove(SelectedClass!);
-                Storage.Instance!.UpdateCalcs();
+                Storage.UpdateCalcs();
                 ReorderAndUpdateUI();
             }, () => SelectedClass != null);
 			OpenSettingsCommand = new RelayCommand(() => 

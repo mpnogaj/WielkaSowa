@@ -15,6 +15,8 @@ namespace WielkaSowa
         {
             AvaloniaXamlLoader.Load(this);
             Storage.Init();
+            Settings.Init();
+            Task.Run(() => Settings.Instance!.LoadSettings()).Wait();
         }
 
         private void OnStartup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
@@ -23,12 +25,18 @@ namespace WielkaSowa
             Task.Run(() => Storage.Instance!.OpenAndLoadFile(args.Length > 1 && File.Exists(args[1]) ? args[1] : null)).Wait();
         }
 
+        private void OnExit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
+        {
+            Task.Run(() => Settings.Instance!.SaveSettings()).Wait();
+        }
+
         public override void OnFrameworkInitializationCompleted()
         {
             if (ApplicationLifetime is IClassicDesktopStyleApplicationLifetime desktop)
             {
                 desktop.MainWindow = new MainWindow();
                 desktop.Startup += OnStartup;
+                desktop.Exit += OnExit;
             }
 
             base.OnFrameworkInitializationCompleted();

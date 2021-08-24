@@ -7,11 +7,11 @@
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WielkaSowa.Views.ManageClass"
         x:DataType="viewmodels:ManageClassViewModel"
-        ExtendClientAreaToDecorationsHint="{Binding Path=!SimpleUI, Source={x:Static helpers:Settings.SettingsModel}}"
-        TransparencyLevelHint="{Binding Path=SimpleUI, Source={x:Static helpers:Settings.SettingsModel}, Converter={StaticResource BoolToWindowTransparencyLevelConverter}}"
         Background="#EE202120"
         Icon="/Assets/Icons/main.ico"
         Title="Zarządzaj klasą"
+		ExtendClientAreaToDecorationsHint="{DynamicResource ComplexUI}"
+        TransparencyLevelHint="{DynamicResource TransparencyHint}"
 		WindowStartupLocation="CenterOwner">
     <Window.Styles>
         <Style Selector="HeaderedContentControl">
