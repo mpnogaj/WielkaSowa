@@ -9,7 +9,6 @@
 		x:DataType="viewmodels:ContactViewModel"
         Title="Kontakt"
 		Icon="/Assets/Icons/main.ico"
-        Background="#EE202120"
         Width="350"
 		Height="175"
 		CanResize="False"

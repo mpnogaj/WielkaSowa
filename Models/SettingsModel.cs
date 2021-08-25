@@ -1,4 +1,5 @@
 using Avalonia;
+using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
 using System;
 using WielkaSowa.ViewModels;
@@ -32,7 +33,6 @@ namespace WielkaSowa.Helpers
 			var res = Application.Current.Resources;
 			res["ComplexUI"] = !SimpleUI;
 			res["TransparencyHint"] = Converters.BoolToWindowTransparencyLevel.ToWindowTransparencyLevel(SimpleUI);
-			res["Theme"] = DarkTheme ? FluentThemeMode.Dark : FluentThemeMode.Light;
 		}
 
 		public static SettingsModel Clone(SettingsModel settingsModel)

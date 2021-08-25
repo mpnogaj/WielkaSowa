@@ -11,7 +11,6 @@
         x:DataType="viewmodels:SettingsViewModel"
         Title="Ustawienia"
         Icon="/Assets/Icons/main.ico"
-        Background="#EE202120"
 		ExtendClientAreaToDecorationsHint="{DynamicResource ComplexUI}"
         TransparencyLevelHint="{DynamicResource TransparencyHint}"
         Width="375"
@@ -24,7 +23,7 @@
                       ToolTip.Tip="Włączenie tej opcji może spowodować wzrost wydajności na słabszych komputerach"
                       IsChecked="{CompiledBinding Temp.SimpleUI}" />
 			<Rectangle Height="7"/>
-			<TextBlock Text="Motyw"/>
+			<TextBlock Text="Motyw (zmieni się przy kolejnym uruchomieniu)"/>
 			<StackPanel Orientation="Horizontal" Spacing="10">
 				<RadioButton IsChecked="{CompiledBinding !Temp.DarkTheme}" Content="Jasny"/>
 			    <RadioButton IsChecked="{CompiledBinding Temp.DarkTheme}" Content="Ciemny"/>

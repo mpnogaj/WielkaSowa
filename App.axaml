@@ -3,8 +3,14 @@
              xmlns:converters="clr-namespace:WielkaSowa.Converters"
              xmlns:helpers="clr-namespace:WielkaSowa.Helpers"
              x:Class="WielkaSowa.App">
+	<Application.Resources>
+		<FluentTheme x:Key="ThemeLight" Mode="Light" />
+        <FluentTheme x:Key="ThemeDark" Mode="Dark" />
+	</Application.Resources>
     <Application.Styles>
-        <FluentTheme Mode="Dark"/>
+		<Style Selector="Window">
+			<Setter Property="Background" Value="{DynamicResource WindowBackground}"/>
+		</Style>
         <Style Selector="TextBlock.Title">
             <Setter Property="Margin" Value="0, 7, 0, 7"/>
             <Setter Property="IsHitTestVisible" Value="False"/>
