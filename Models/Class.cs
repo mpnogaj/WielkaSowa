@@ -281,7 +281,7 @@ namespace WielkaSowa.Models
         public string SportsClubs
         {
             get => _sportsClubs;
-            set => Validator.ValidateAndSet(false, _sportsClubsRange, value, out _sportsClubs, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _sportsClubs, this);
         }
         #endregion
         #region Aktywnosci klasowe
