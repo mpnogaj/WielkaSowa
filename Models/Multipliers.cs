@@ -7,6 +7,8 @@ namespace WielkaSowa.Models
 {
 	public class Multipliers
 	{
+		public const string DefaultWildcard = "$DOMYŚLNA$";
+		
 		#region Points multipliers
 		// ReSharper disable InconsistentNaming
 		// Zachowanie

@@ -1,7 +1,10 @@
 using System.Threading.Tasks;
+using Avalonia.Controls;
 using WielkaSowa.Helpers;
 using WielkaSowa.Models;
 using WielkaSowa.ViewModels.Commands;
+using WielkaSowa.ViewModels.Commands.Async;
+using WielkaSowa.Views;
 
 namespace WielkaSowa.ViewModels
 {
@@ -10,6 +13,8 @@ namespace WielkaSowa.ViewModels
         public RelayCommand CancelCommand { get; }
         public RelayCommand SaveCommand { get; }
         public RelayCommand RevertToDefaultCommand { get; }
+        public AsyncRelayCommand ChooseMultipliersFileCommand { get; }
+        public RelayCommand DefaultMultipliersCommand { get; }
 
         private SettingsModel _temp;
         public SettingsModel Temp 
@@ -31,6 +36,21 @@ namespace WielkaSowa.ViewModels
             {
                 Settings.Instance.RevertToDefault();
                 Temp = SettingsModel.Clone(Settings.Instance.Default);
+            });
+            ChooseMultipliersFileCommand = new AsyncRelayCommand(async () =>
+            {
+                var ofd = new OpenFileDialog
+                {
+                    AllowMultiple = false,
+                    Filters = Constants.DataFileFilters,
+                    Title = "Wybierz plik ze współczynnikami"
+                };
+                string file = (await ofd.ShowAsync(Essentials.GetWindowOfType(typeof(SettingsWindow))))[0];
+                Temp.PathToCustomMultipliers = file;
+            });
+            DefaultMultipliersCommand = new RelayCommand(() =>
+            {
+                Temp.PathToCustomMultipliers = Multipliers.DefaultWildcard;
             });
         }
 

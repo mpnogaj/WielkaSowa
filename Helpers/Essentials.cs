@@ -1,3 +1,4 @@
+using System;
 using System.Diagnostics;
 using System.Runtime.InteropServices;
 using Avalonia;
@@ -17,6 +18,21 @@ namespace WielkaSowa.Helpers
         public static MainWindow GetMainWindow()
         {
             return (GetAppDesktopLifetime().MainWindow as MainWindow)!;
+        }
+
+        public static Window? GetWindowOfType(Type windowType)
+        {
+            if (GetAppDesktopLifetime().Windows.Count < 2)
+            {
+                return null;
+            }
+
+            foreach (var window in GetAppDesktopLifetime().Windows)
+            {
+                if (window.GetType() == windowType) return window;
+            }
+
+            return null;
         }
 
         public static void CloseTopWindow()

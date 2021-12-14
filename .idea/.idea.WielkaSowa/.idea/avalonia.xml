@@ -7,6 +7,7 @@
         <entry key="MainWindow.axaml" value="WielkaSowa.csproj" />
         <entry key="Views/MainWindow.axaml" value="WielkaSowa.csproj" />
         <entry key="Views/ManageClass.axaml" value="WielkaSowa.csproj" />
+        <entry key="Views/ManageMultiplierFileWindow.axaml" value="WielkaSowa.csproj" />
         <entry key="Views/SettingsWindow.axaml" value="WielkaSowa.csproj" />
       </map>
     </option>

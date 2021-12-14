@@ -5,6 +5,7 @@
 	<Application.Resources>
 		<FluentTheme x:Key="ThemeLight" Mode="Light" />
         <FluentTheme x:Key="ThemeDark" Mode="Dark" />
+		<converters:BoolToWindowTransparencyLevel x:Key="BoolToWindowTransparencyLevelConverter"/>
 	</Application.Resources>
     <Application.Styles>
 		<Style Selector="Window">
@@ -21,7 +22,4 @@
 			<Setter Property="Margin" Value="7, 0, 3, 0"/>
 		</Style>
     </Application.Styles>
-    <Application.Resources>
-        <converters:BoolToWindowTransparencyLevel x:Key="BoolToWindowTransparencyLevelConverter"/>
-    </Application.Resources>
 </Application>

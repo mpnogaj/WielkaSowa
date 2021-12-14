@@ -16,7 +16,7 @@ namespace WielkaSowa.Helpers
         {
             SimpleUi = false,
             DarkTheme = true,
-            PathToCustomMultipliers = string.Empty
+            PathToCustomMultipliers = Multipliers.DefaultWildcard
         };
 
 		public void RevertToDefault()

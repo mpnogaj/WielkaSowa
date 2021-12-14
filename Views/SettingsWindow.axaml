@@ -10,7 +10,7 @@
         Icon="/Assets/Icons/main.ico"
 		ExtendClientAreaToDecorationsHint="{DynamicResource ComplexUI}"
         TransparencyLevelHint="{DynamicResource TransparencyHint}"
-        Width="375"
+        Width="600"
 		Height="400"
 		WindowStartupLocation="CenterOwner">
     <Grid RowDefinitions="Auto,*,50" Margin="10, 0, 10, 0" HorizontalAlignment="Stretch">
@@ -26,6 +26,17 @@
 				<RadioButton IsChecked="{CompiledBinding !Temp.DarkTheme}" Content="Jasny"/>
 			    <RadioButton IsChecked="{CompiledBinding Temp.DarkTheme}" Content="Ciemny"/>
 			</StackPanel>
+            <TextBlock VerticalAlignment="Center" Text="Wybierz plik ze współczynnikami do punktów"/>
+            <StackPanel Orientation="Horizontal" Spacing="7">
+	            <Button Content="Wybierz plik" Command="{CompiledBinding ChooseMultipliersFileCommand}"/>
+	            <Button Content="Domyślne" Command="{CompiledBinding DefaultMultipliersCommand}"/>
+	            <Button Content="Utwórz nowy plik" Command="{CompiledBinding DefaultMultipliersCommand}"/>
+	            <Button Content="Edytuj wybrany" Command="{CompiledBinding DefaultMultipliersCommand}"/>
+            </StackPanel>
+            <StackPanel Orientation="Horizontal" Spacing="7">
+	            <TextBlock VerticalAlignment="Center" Text="Ścieżka do pliku:"/>
+	            <TextBlock Text="{CompiledBinding Temp.PathToCustomMultipliers}"/>
+            </StackPanel>
         </StackPanel>
 		<StackPanel Grid.Row="2" Orientation="Horizontal" HorizontalAlignment="Right" Spacing="15">
 			<StackPanel.Styles>

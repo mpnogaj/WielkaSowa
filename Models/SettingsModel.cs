@@ -35,7 +35,7 @@ namespace WielkaSowa.Models
 		{
 			_simpleUi = false;
 			_darkTheme = true;
-			_pathToCustomMultipliers = "";
+			_pathToCustomMultipliers = Multipliers.DefaultWildcard;
 			Multipliers = Multipliers.Default;
 		}
 
@@ -44,7 +44,14 @@ namespace WielkaSowa.Models
 			var res = Application.Current.Resources;
 			res["ComplexUI"] = !SimpleUi;
 			res["TransparencyHint"] = Converters.BoolToWindowTransparencyLevel.ToWindowTransparencyLevel(SimpleUi);
-			Multipliers = await Multipliers.CreateMultipliers(_pathToCustomMultipliers);
+			if (_pathToCustomMultipliers == Multipliers.DefaultWildcard)
+			{
+				Multipliers = Multipliers.Default;
+			}
+			else
+			{
+				Multipliers = await Multipliers.CreateMultipliers(_pathToCustomMultipliers);
+			}
         }
 
 		public static SettingsModel Clone(SettingsModel settingsModel)
