@@ -1,6 +1,5 @@
 using System;
 using System.Collections.Generic;
-using System.Reflection;
 using System.Text;
 using WielkaSowa.Helpers;
 using WielkaSowa.Helpers.Calculators;
@@ -11,70 +10,16 @@ namespace WielkaSowa.Models
 {
     public class Class : ViewModelBase
     {
-        // Dummy field to difrienciate instances
+        // Dummy field to differentiate instances
         private readonly long _classId;
         public long ClassId { get => _classId; }
 
         private readonly Pair<double, double> _percentRange = new(0, 100);
         private readonly Pair<double, double> _markRange = new(1, 6);
         private readonly Pair<double, double> _peopleRange = new(0, 40);
-        private readonly Pair<double, double> _infiniteRange = new(0, Int32.MaxValue);
-        private readonly Pair<double, double> _sportsClubsRange = new(0, 100);
-        private readonly List<PropertyInfo> _properties = new();
+        private readonly Pair<double, double> _infiniteRange = new(0, int.MaxValue);
 
-        #region Points multipliers
-        // ReSharper disable InconsistentNaming
-        // Zachowanie
-        private const int MWzor = 5;
-        private const int MBdb = 3;
-        private const int MDb = 1;
-        private const int MPop = 0;
-        private const int MNOdp = -2;
-        private const int MNag = -15;
-
-        // Olimpiady
-        private const int MOSz = 10;
-        private const int MOOk = 25;
-        private const int MOCt = 75;
-        private const int MOMn = 150;
-
-        // Konkursy
-        private const int MKSz = 5;
-        private const int MKRj = 10;
-        private const int MKCt = 50;
-        private const int MKMn = 100;
-
-        // Wycieczki Klasowe 1-d
-        private const int MWK1 = 20;
-        // 2 dniowe i dluzsze
-        private const int MWK2 = 50;
-        // Przedsiewziecia klasowe
-        private const int MPK = 5;
-
-        // Programy artystyczne
-        private const int MSzPA = 10;
-        // Kiermasze
-        private const int MSzKier = 50;
-        // Organizacja imprez
-        private const int MSzOImp = 50;
-        // Pomoc w organnizacji imprez
-        private const int MSzPImp = 25;
-
-        // Parlament
-        private const int MPU = 40;
-        // Poczet sztandarowy
-        private const int MPSz = 20;
-
-        // Wolontariaty, harcerstwo itp.
-        private const int MPSzWol = 40;
-        private const int MPSzMRM = 40;
-        private const int MPSzHar = 40;
-        private const int MPSzPTH = 40;
-        private const int MPSzZbior = 25;
-        // ReSharper restore InconsistentNaming
-        #endregion
-
-        public ClassData ClassData { get; set; } = new();
+        public ClassData ClassData { get; } = new();
 
         private long _points;
         public long Points { get => _points; set => SetProperty(ref _points, value); }
@@ -83,7 +28,7 @@ namespace WielkaSowa.Models
         #region Point properties
 
         #region Obecnosc i srednia ocen
-        private int _attPoints = 0;
+        private int _attPoints;
         public int AttPoints
         {
             get => _attPoints;
@@ -139,7 +84,7 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Zachowanie
-        private int _behaviourPoints = 0;
+        private int _behaviourPoints;
         public int BehaviourPoints
         {
             get => _behaviourPoints;
@@ -190,7 +135,7 @@ namespace WielkaSowa.Models
         #endregion
         #region Olimpiady i konkursy
         #region Olimpiady
-        private int _olympicPoints = 0;
+        private int _olympicPoints;
         public int OlympicPoints
         {
             get => _olympicPoints;
@@ -226,7 +171,7 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Konkursy
-        private int _contestPoints = 0;
+        private int _contestPoints;
         public int ContestPoints
         {
             get => _contestPoints;
@@ -263,7 +208,7 @@ namespace WielkaSowa.Models
         #endregion
         #endregion
         #region Sport
-        private int _pePoints = 0;
+        private int _pePoints;
         public int PePoints
         {
             get => _pePoints;
@@ -285,7 +230,7 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Aktywnosci klasowe
-        private int _classActivitiesPoints = 0;
+        private int _classActivitiesPoints;
         public int ClassActivitiesPoints
         {
             get => _classActivitiesPoints;
@@ -314,7 +259,7 @@ namespace WielkaSowa.Models
         }
         #endregion
         #region Agendy szkolne
-        private int _agendasPoints = 0;
+        private int _agendasPoints;
         public int AgendasPoints
         {
             get => _agendasPoints;
@@ -388,7 +333,7 @@ namespace WielkaSowa.Models
         }
 
         private string _mrmPoints = "";
-        public string MRMPoints
+        public string MrmPoints
         {
             get => _mrmPoints;
             set => Validator.ValidateAndSet(false, _infiniteRange, value, out _mrmPoints, this);
@@ -402,7 +347,7 @@ namespace WielkaSowa.Models
         }
 
         private string _phtPoints = "";
-        public string PHTPoints
+        public string PhtPoints
         {
             get => _phtPoints;
             set => Validator.ValidateAndSet(false, _infiniteRange, value, out _phtPoints, this);
@@ -412,7 +357,7 @@ namespace WielkaSowa.Models
         public string MeetingPoints
         {
             get => _meetingPoints;
-            set => Validator.ValidateAndSet(false, _peopleRange, value, out _meetingPoints, this);
+            set => Validator.ValidateAndSet(false, _infiniteRange, value, out _meetingPoints, this);
         }
         #endregion
 
@@ -422,63 +367,56 @@ namespace WielkaSowa.Models
         {
             _classId = DateTime.Now.ToFileTime();
             Storage.Instance!.Classes.Add(this);
-            var properties = typeof(Class).GetProperties();
-            foreach (var property in properties)
-            {
-                if (property.PropertyType == typeof(string))
-                {
-                    _properties.Add(property);
-                }
-            }
         }
 
         public void RecalculatePoints()
         {
+            Multipliers m = Settings.Instance!.Current.Multipliers;
             BehaviourPoints = 
-                _wzor.ToInt() * MWzor + 
-                _bdb.ToInt() * MBdb + 
-                _db.ToInt() * MDb + 
-                _pop.ToInt() * MPop + 
-                _nOdp.ToInt() * MNOdp + 
-                _nag.ToInt() * MNag;
+                _wzor.ToInt() * m.MWzor + 
+                _bdb.ToInt() * m.MBdb + 
+                _db.ToInt() * m.MDb + 
+                _pop.ToInt() * m.MPop + 
+                _nOdp.ToInt() * m.MNOdp + 
+                _nag.ToInt() * m.MNag;
 
             OlympicPoints =
-                _schoolOlympic.ToInt() * MOSz +
-                _regionalOlympic.ToInt() * MOOk +
-                _centralOlympic.ToInt() * MOCt +
-                _internationalOlympic.ToInt() * MOMn;
+                _schoolOlympic.ToInt() * m.MOSz +
+                _regionalOlympic.ToInt() * m.MOOk +
+                _centralOlympic.ToInt() * m.MOCt +
+                _internationalOlympic.ToInt() * m.MOMn;
 
             ContestPoints =
-                _schoolContest.ToInt() * MKSz +
-                _regionalContest.ToInt() * MKRj +
-                _centralContest.ToInt() * MKCt +
-                _internationalContest.ToInt() * MKMn;
+                _schoolContest.ToInt() * m.MKSz +
+                _regionalContest.ToInt() * m.MKRj +
+                _centralContest.ToInt() * m.MKCt +
+                _internationalContest.ToInt() * m.MKMn;
 
             PePoints =
                 _peTeacher.ToInt() +
                 _sportsClubs.ToInt();
 
             ClassActivitiesPoints =
-                _class1Day.ToInt() * MWK1 + 
-                _class2Day.ToInt() * MWK2 +
-                _classActions.ToInt() * MPK;
+                _class1Day.ToInt() * m.MWK1 + 
+                _class2Day.ToInt() * m.MWK2 +
+                _classActions.ToInt() * m.MPK;
 
             AgendasPoints = 
-                _flagGroup.ToInt() * MPSz + 
-                _studentParliament.ToInt() * MPU;
+                _flagGroup.ToInt() * m.MPSz + 
+                _studentParliament.ToInt() * m.MPU;
 
             SchoolEventsPoints = 
-                _artisticEvents.ToInt() * MSzPA + 
-                _fairs.ToInt() * MSzKier + 
-                _schoolEventsOrganization.ToInt() * MSzOImp + 
-                _schoolEventsHelp.ToInt() * MSzPImp;
+                _artisticEvents.ToInt() * m.MSzPA + 
+                _fairs.ToInt() * m.MSzKier + 
+                _schoolEventsOrganization.ToInt() * m.MSzOImp + 
+                _schoolEventsHelp.ToInt() * m.MSzPImp;
 
             VolunteeringActionsPoints = 
-                _volunteeringPoints.ToInt() * MPSzWol +
-                _mrmPoints.ToInt() * MPSzMRM +
-                _scoutingPoints.ToInt() * MPSzHar +
-                _phtPoints.ToInt() * MPSzPTH +
-                _meetingPoints.ToInt() * MPSzZbior;
+                _volunteeringPoints.ToInt() * m.MPSzWol +
+                _mrmPoints.ToInt() * m.MPSzMRM +
+                _scoutingPoints.ToInt() * m.MPSzHar +
+                _phtPoints.ToInt() * m.MPSzPTH +
+                _meetingPoints.ToInt() * m.MPSzZbior;
 
             Points = 0;
 
@@ -518,9 +456,9 @@ namespace WielkaSowa.Models
 
     public class ClassData
     {
-        public int LetterIndex { get; set; }
-        public int LevelIndex { get; set; }
-        public bool AfterPrimarySchool { get; set; }
+        public int LetterIndex { get; }
+        public int LevelIndex { get; }
+        public bool AfterPrimarySchool { get; }
 
         public List<char> AvailableLetters { get; } = new()
         {
@@ -551,7 +489,7 @@ namespace WielkaSowa.Models
             var letterCandidate = AvailableLetters.Find(x => x == letter);
             LetterIndex = letter == '\0' ? 0 : AvailableLetters.IndexOf(letterCandidate);
             var levelCandidate = AvailableLevels.Find(x => x == level);
-            LevelIndex = levelCandidate == null ? 0 : AvailableLevels.IndexOf(levelCandidate!);
+            LevelIndex = levelCandidate == null ? 0 : AvailableLevels.IndexOf(levelCandidate);
             AfterPrimarySchool = afterPrimarySchool;
         }
 

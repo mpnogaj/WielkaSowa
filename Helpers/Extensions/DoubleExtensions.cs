@@ -1,6 +1,3 @@
-using System;
-using WielkaSowa.Helpers.Extensions;
-
 namespace WielkaSowa.Helpers.Extensions
 {
     public static class DoubleExtensions

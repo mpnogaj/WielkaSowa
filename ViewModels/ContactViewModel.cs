@@ -1,4 +1,5 @@
-﻿using WielkaSowa.ViewModels.Commands;
+﻿using WielkaSowa.Helpers;
+using WielkaSowa.ViewModels.Commands;
 
 namespace WielkaSowa.ViewModels
 {
@@ -8,10 +9,7 @@ namespace WielkaSowa.ViewModels
 
         public ContactViewModel()
         {
-            CloseWindowCommand = new RelayCommand(() =>
-            {
-                Essentials.CloseTopWindow();
-            });
+            CloseWindowCommand = new RelayCommand(Essentials.CloseTopWindow);
         }
     }
 }

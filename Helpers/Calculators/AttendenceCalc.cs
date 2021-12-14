@@ -18,7 +18,7 @@ namespace WielkaSowa.Helpers.Calculators
             foreach(var c in list)
             {
                 // Check if ex aequo
-                if (prev != c.First) currPlace++;
+                if (Math.Abs(prev - c.First) > 0.001) currPlace++;
                 Storage.Instance!.Classes[c.Second].AttPoints = AttPoints[Math.Min(currPlace, 3)];
                 prev = c.First;
             }
@@ -29,7 +29,7 @@ namespace WielkaSowa.Helpers.Calculators
             List<AttPair> output = new();
             for(int i = 0; i < Storage.Instance!.Classes.Count; i++)
             {
-                Class c = Storage.Instance!.Classes[i];
+                Class c = Storage.Instance.Classes[i];
                 output.Add(new AttPair(c.AverageAtt.ToDouble(), i));
             }
             return output.OrderByDescending(x => x.First).ToList();

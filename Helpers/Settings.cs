@@ -1,29 +1,22 @@
-using System.ComponentModel;
+using System.IO;
+using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WielkaSowa.Models;
 
 namespace WielkaSowa.Helpers
 {
 	public class Settings
 	{
 		const string SettingsFile = "settings.json";
-        public static Settings? Instance { get; private set; } = null;
+        public static Settings? Instance { get; private set; }
 
-        private SettingsModel _current = new();
-        public SettingsModel Current
-        {
-            get => _current;
-            private set
-            {
-                if(value != _current)
-                {
-                    _current = value;
-                }
-            }
-        }
+        public SettingsModel Current { get; private set; } = new();
 
-		public SettingsModel Default { get; private set; } = new()
+        public SettingsModel Default { get; } = new()
         {
-            SimpleUI = false
+            SimpleUi = false,
+            DarkTheme = true,
+            PathToCustomMultipliers = string.Empty
         };
 
 		public void RevertToDefault()
@@ -31,18 +24,18 @@ namespace WielkaSowa.Helpers
 			Current = SettingsModel.Clone(Default);
         }
 
-		public void ApplySettings(SettingsModel settings)
+		public async Task ApplySettings(SettingsModel settings)
         {
 			Current = SettingsModel.Clone(settings);
-            Current.ApplySettings();
+            await Current.ApplySettings();
         }
 
 		public async Task LoadSettings()
         {
-			string json;
-            try
+	        try
             {
-                using (StreamReader sr = new(SettingsFile))
+	            string json;
+	            using (StreamReader sr = new(SettingsFile))
                 {
                     json = await sr.ReadToEndAsync();
                 }
@@ -54,21 +47,18 @@ namespace WielkaSowa.Helpers
             }
             finally
             {
-                Current.ApplySettings();
+                await Current.ApplySettings();
             }
         }
 
         public async Task SaveSettings()
         {
 			string json = JsonConvert.SerializeObject(Current);
-            using StreamWriter sw = new(SettingsFile);
+            await using StreamWriter sw = new(SettingsFile);
             await sw.WriteAsync(json);
         }
 
-        private Settings()
-        {
-            
-        }
+        private Settings() { }
 
         public static void Init()
         {

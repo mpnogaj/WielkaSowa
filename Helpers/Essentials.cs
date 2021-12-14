@@ -1,11 +1,11 @@
+using System.Diagnostics;
+using System.Runtime.InteropServices;
 using Avalonia;
 using Avalonia.Controls;
 using Avalonia.Controls.ApplicationLifetimes;
-using System.Diagnostics;
-using System.Runtime.InteropServices;
 using WielkaSowa.Views;
 
-namespace WielkaSowa
+namespace WielkaSowa.Helpers
 {
     public static class Essentials
     {

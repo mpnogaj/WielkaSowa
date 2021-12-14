@@ -1,4 +1,6 @@
-﻿using Avalonia.Threading;
+﻿using System;
+using System.Threading.Tasks;
+using Avalonia.Threading;
 using System.Windows.Input;
 
 namespace WielkaSowa.ViewModels.Commands.Async
@@ -7,9 +9,8 @@ namespace WielkaSowa.ViewModels.Commands.Async
     {
         public event EventHandler? CanExecuteChanged;
         private readonly Func<T, Task> _execute;
-        private readonly Func<bool>? _canExecute = null;
-        private readonly DispatcherTimer _canExecuteChangedTimer;
-        private bool _isExecuting = false;
+        private readonly Func<bool>? _canExecute;
+        private bool _isExecuting;
 
         public AsyncRelayCommand(Func<T, Task> execute) : this(execute, () => true) { }
 
@@ -17,12 +18,12 @@ namespace WielkaSowa.ViewModels.Commands.Async
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
-            _canExecuteChangedTimer = new DispatcherTimer
+            DispatcherTimer canExecuteChangedTimer = new()
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 50),
             };
-            _canExecuteChangedTimer.Tick += CanExecuteChangedTimer_Tick;
-            _canExecuteChangedTimer.Start();
+            canExecuteChangedTimer.Tick += CanExecuteChangedTimer_Tick;
+            canExecuteChangedTimer.Start();
         }
 
         private void CanExecuteChangedTimer_Tick(object? sender, EventArgs e)
@@ -46,7 +47,6 @@ namespace WielkaSowa.ViewModels.Commands.Async
 
         public async Task ExecuteAsync(T parameter)
         {
-            if (_execute == null) return;
             if (!_isExecuting)
             {
                 _isExecuting = true;
@@ -76,9 +76,8 @@ namespace WielkaSowa.ViewModels.Commands.Async
     {
         public event EventHandler? CanExecuteChanged;
         private readonly Func<Task> _execute;
-        private readonly Func<bool>? _canExecute = null;
-        private readonly DispatcherTimer _canExecuteChangedTimer;
-        private bool _isExecuting = false;
+        private readonly Func<bool>? _canExecute;
+        private bool _isExecuting;
 
         public AsyncRelayCommand(Func<Task> execute) : this(execute, () => true) { }
 
@@ -86,12 +85,12 @@ namespace WielkaSowa.ViewModels.Commands.Async
         {
             _execute = execute ?? throw new ArgumentNullException(nameof(execute));
             _canExecute = canExecute;
-            _canExecuteChangedTimer = new DispatcherTimer
+            DispatcherTimer canExecuteChangedTimer = new()
             {
                 Interval = new TimeSpan(0, 0, 0, 0, 50),
             };
-            _canExecuteChangedTimer.Tick += CanExecuteChangedTimer_Tick;
-            _canExecuteChangedTimer.Start();
+            canExecuteChangedTimer.Tick += CanExecuteChangedTimer_Tick;
+            canExecuteChangedTimer.Start();
         }
 
         private void CanExecuteChangedTimer_Tick(object? sender, EventArgs e)

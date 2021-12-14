@@ -1,8 +1,10 @@
+using System;
+using System.IO;
+using System.Threading.Tasks;
 using Avalonia;
 using Avalonia.Controls.ApplicationLifetimes;
 using Avalonia.Markup.Xaml;
 using Avalonia.Media;
-using Avalonia.Styling;
 using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
 using WielkaSowa.Helpers;
@@ -23,22 +25,22 @@ namespace WielkaSowa
             if (Settings.Instance!.Current.DarkTheme)
             {
                 Current.Resources["WindowBackground"] = new SolidColorBrush(Color.Parse("#EE202120"));
-                App.ChangeTheme(FluentThemeMode.Dark);
+                ChangeTheme(FluentThemeMode.Dark);
             }
             else
             {
                 Current.Resources["WindowBackground"] = new SolidColorBrush(Color.Parse("#FFFFFFFF"));
-                App.ChangeTheme(FluentThemeMode.Light);
+                ChangeTheme(FluentThemeMode.Light);
             }
         }
 
-        private void OnStartup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
+        private static void OnStartup(object? sender, ControlledApplicationLifetimeStartupEventArgs e)
         {
             string[] args = Environment.GetCommandLineArgs();
             Task.Run(() => Storage.Instance!.OpenAndLoadFile(args.Length > 1 && File.Exists(args[1]) ? args[1] : null)).Wait();
         }
 
-        private void OnExit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
+        private static void OnExit(object? sender, ControlledApplicationLifetimeExitEventArgs e)
         {
             Task.Run(() => Settings.Instance!.SaveSettings()).Wait();
         }
@@ -55,7 +57,7 @@ namespace WielkaSowa
             base.OnFrameworkInitializationCompleted();
         }
 
-        public static void ChangeTheme(FluentThemeMode theme)
+        private static void ChangeTheme(FluentThemeMode theme)
         {
             Dispatcher.UIThread.InvokeAsync(() =>
             {

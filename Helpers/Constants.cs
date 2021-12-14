@@ -1,5 +1,5 @@
-﻿using Avalonia.Controls;
-using Avalonia.Markup.Xaml.Styling;
+﻿using System.Collections.Generic;
+using Avalonia.Controls;
 
 namespace WielkaSowa.Helpers
 {

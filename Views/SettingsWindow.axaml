@@ -3,9 +3,6 @@
         xmlns:d="http://schemas.microsoft.com/expression/blend/2008"
         xmlns:mc="http://schemas.openxmlformats.org/markup-compatibility/2006"
         xmlns:viewmodels="clr-namespace:WielkaSowa.ViewModels"
-        xmlns:helpers="clr-namespace:WielkaSowa.Helpers"
-        xmlns:i="using:Avalonia.Xaml.Interactivity"
-        xmlns:ia="using:Avalonia.Xaml.Interactions.Core"
         mc:Ignorable="d" d:DesignWidth="800" d:DesignHeight="450"
         x:Class="WielkaSowa.Views.SettingsWindow"
         x:DataType="viewmodels:SettingsViewModel"
@@ -20,8 +17,9 @@
         <TextBlock Grid.Row="0" Classes="Title" Text="Ustawienia"/>
         <StackPanel Grid.Row="1" Spacing="3">
             <CheckBox Content="Użyj prostego UI"
-                      ToolTip.Tip="Włączenie tej opcji może spowodować wzrost wydajności na słabszych komputerach"
-                      IsChecked="{CompiledBinding Temp.SimpleUI}" />
+                      ToolTip.Tip="Włączenie tej opcji może spowodować wzrost wydajności na słabszych komputerach.
+                      Jeżeli tytuł okna wyświetla się dwa razy włączenie tej opcji powinno usunąć ten problem"
+                      IsChecked="{CompiledBinding Temp.SimpleUi}" />
 			<Rectangle Height="7"/>
 			<TextBlock Text="Motyw (zmieni się przy kolejnym uruchomieniu)"/>
 			<StackPanel Orientation="Horizontal" Spacing="10">

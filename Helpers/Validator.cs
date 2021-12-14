@@ -1,5 +1,4 @@
 using System;
-using System.Linq;
 using Avalonia.Data;
 using WielkaSowa.Helpers.Extensions;
 using WielkaSowa.Models;
@@ -23,7 +22,7 @@ namespace WielkaSowa.Helpers
 
         public static void ValidateNumber(double s)
         {
-            if(s != Math.Ceiling(s))
+            if(Math.Abs(s - Math.Ceiling(s)) > 0.001)
                 throw new DataValidationException(InvalidType);
         }
 

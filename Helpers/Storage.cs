@@ -14,7 +14,7 @@ namespace WielkaSowa.Helpers
     {
         public string CurrentFile { get; private set; }
         private FileStream? _file;
-        public static Storage? Instance { get; private set; } = null;
+        public static Storage? Instance { get; private set; }
 
         public event EventHandler? ClassesUpdated;
 

@@ -226,14 +226,14 @@
 											 Text="{CompiledBinding Class.VolunteeringPoints}"/>
                                     <TextBlock Grid.Row="1" Grid.Column="0" Text="MRM" />
                                     <TextBox Classes="Pers" Grid.Row="1" Grid.Column="1" 
-											 Text="{CompiledBinding Class.MRMPoints}"/>
+											 Text="{CompiledBinding Class.MrmPoints}"/>
                                     <TextBlock Grid.Row="2" Grid.Column="0" Text="ZHP i ZHR" />
                                     <TextBox Classes="Pers" Grid.Row="2" Grid.Column="1" 
 											 Text="{CompiledBinding Class.ScoutingPoints}"/>
                                     <TextBlock Grid.Row="3" Grid.Column="0"
                                                Text="Działalność w stowarzyszeniu lub (PTH)&#x0a;organizacji pożytku publicznego" />
                                     <TextBox Classes="Pers" Grid.Row="3" Grid.Column="1" 
-											 Text="{CompiledBinding Class.PHTPoints}"/>
+											 Text="{CompiledBinding Class.PhtPoints}"/>
                                     <TextBlock Grid.Row="4" Grid.Column="0" Text="Zbiórki, organizacje itp." />
                                     <TextBox Classes="Pers" Grid.Row="4" Grid.Column="1" 
 											 Text="{CompiledBinding Class.MeetingPoints}"/>

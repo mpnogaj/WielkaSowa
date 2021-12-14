@@ -1,4 +1,6 @@
+using System.Threading.Tasks;
 using WielkaSowa.Helpers;
+using WielkaSowa.Models;
 using WielkaSowa.ViewModels.Commands;
 
 namespace WielkaSowa.ViewModels
@@ -19,18 +21,15 @@ namespace WielkaSowa.ViewModels
         public SettingsViewModel()
         {
             _temp = SettingsModel.Clone(Settings.Instance!.Current);
-            CancelCommand = new RelayCommand(() =>
-            {
-                Close();
-            });
+            CancelCommand = new RelayCommand(Close);
             SaveCommand = new RelayCommand(() =>
             {
-                Settings.Instance!.ApplySettings(Temp);
+                Task.Run(() => Settings.Instance.ApplySettings(Temp)).Wait();
                 Close();
             });
             RevertToDefaultCommand = new RelayCommand(() =>
             {
-                Settings.Instance!.RevertToDefault();
+                Settings.Instance.RevertToDefault();
                 Temp = SettingsModel.Clone(Settings.Instance.Default);
             });
         }

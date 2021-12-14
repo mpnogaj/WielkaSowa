@@ -1,9 +1,9 @@
 using Avalonia.Controls;
 using System;
-using System.Collections.Generic;
 using System.Collections.ObjectModel;
 using System.Diagnostics;
 using System.IO;
+using System.Threading.Tasks;
 using WielkaSowa.Helpers;
 using WielkaSowa.Models;
 using WielkaSowa.ViewModels.Commands;
@@ -42,13 +42,13 @@ namespace WielkaSowa.ViewModels
         public MainWindowViewModel()
         {
             _classes = new();
-            Storage.Instance!.ClassesUpdated += (sender, e) => UpdateUI(); 
+            Storage.Instance!.ClassesUpdated += (_, _) => UpdateUi(); 
             AddClassCommand = new RelayCommand(() =>
             {
                 ManageClass manageClassWindow = new();
-                ManageClassViewModel manageClassViewModel = new((c) =>
+                ManageClassViewModel manageClassViewModel = new((_) =>
                 {
-                    ReorderAndUpdateUI();
+                    ReorderAndUpdateUi();
                 }, () => manageClassWindow.Close());
                 manageClassWindow.DataContext = manageClassViewModel;
                 manageClassWindow.ShowDialog(Essentials.GetMainWindow());
@@ -61,11 +61,11 @@ namespace WielkaSowa.ViewModels
                 {
                     if (prevPoints == c.Points)
                     {
-                        UpdateUI();
+                        UpdateUi();
                     }
                     else
                     {
-                        ReorderAndUpdateUI();
+                        ReorderAndUpdateUi();
                     }
                 }, () => manageClassWindow.Close(), SelectedClass);
                 manageClassWindow.DataContext = manageClassViewModel;
@@ -73,9 +73,9 @@ namespace WielkaSowa.ViewModels
             }, () => SelectedClass != null);
             RemoveClassCommand = new RelayCommand(() =>
             {
-                Storage.Instance!.Classes.Remove(SelectedClass!);
+                Storage.Instance.Classes.Remove(SelectedClass!);
                 Storage.UpdateCalcs();
-                ReorderAndUpdateUI();
+                ReorderAndUpdateUi();
             }, () => SelectedClass != null);
 			OpenSettingsCommand = new RelayCommand(() => 
 			{
@@ -87,7 +87,7 @@ namespace WielkaSowa.ViewModels
                 OpenFileDialog dialog = new()
                 {
                     AllowMultiple = false,
-                    Title = "Otwórz plik z danymi",
+                    Title = "Otwï¿½rz plik z danymi",
                     Filters = Constants.DataFileFilters
                 };
                 var res = await dialog.ShowAsync(Essentials.GetMainWindow());
@@ -133,15 +133,15 @@ namespace WielkaSowa.ViewModels
         // Use this instead of sort because of time complexity (this -> O(n), sort -> O(n log n))
         // We need to find correct position only for one newly added element
         // We are assuming that list is sorted before adding new item
-        private void ReorderAndUpdateUI()
+        private void ReorderAndUpdateUi()
         {
             try
             {
                 var i = 0;
                 var j = Storage.Instance!.Classes.Count - 1;
-                while (i < Storage.Instance!.Classes.Count - 1)
+                while (i < Storage.Instance.Classes.Count - 1)
                 {
-                    if (Storage.Instance!.Classes[i].Points < Storage.Instance!.Classes[j].Points)
+                    if (Storage.Instance.Classes[i].Points < Storage.Instance.Classes[j].Points)
                     {
                         SwapClasses(i, j);
                         break;
@@ -158,7 +158,7 @@ namespace WielkaSowa.ViewModels
                     j--;
                 }
 
-                UpdateUI();
+                UpdateUi();
             }
             catch (ArgumentOutOfRangeException)
             {
@@ -172,12 +172,12 @@ namespace WielkaSowa.ViewModels
             {
                 var currPlace = 1;
                 var prevPoints = Storage.Instance!.Classes[0].Points;
-                Storage.Instance!.Classes[0].Place = 1;
-                for (var i = 1; i < Storage.Instance!.Classes.Count; i++)
+                Storage.Instance.Classes[0].Place = 1;
+                for (var i = 1; i < Storage.Instance.Classes.Count; i++)
                 {
-                    if (Storage.Instance!.Classes[i].Points != prevPoints) currPlace++;
-                    Storage.Instance!.Classes[i].Place = currPlace;
-                    prevPoints = Storage.Instance!.Classes[i].Points;
+                    if (Storage.Instance.Classes[i].Points != prevPoints) currPlace++;
+                    Storage.Instance.Classes[i].Place = currPlace;
+                    prevPoints = Storage.Instance.Classes[i].Points;
                 }
             }
             catch (ArgumentOutOfRangeException)
@@ -188,13 +188,11 @@ namespace WielkaSowa.ViewModels
 
         private void SwapClasses(int left, int right)
         {
-            var temp = Storage.Instance!.Classes[left];
-            Storage.Instance!.Classes[left] = Storage.Instance!.Classes[right];
-            Storage.Instance!.Classes[right] = temp;
+            (Storage.Instance!.Classes[left], Storage.Instance.Classes[right]) = (Storage.Instance.Classes[right], Storage.Instance.Classes[left]);
         }
 
         // Hacky way to update observable, but it works
-        private void UpdateUI()
+        private void UpdateUi()
         {
             UpdatePlaces();
             Debug.WriteLine("Updating UI. New UI: ");
@@ -204,7 +202,7 @@ namespace WielkaSowa.ViewModels
             }
             Debug.WriteLine("========");
             Classes = new ObservableCollection<Class>();
-            Classes = new ObservableCollection<Class>(Storage.Instance!.Classes);
+            Classes = new ObservableCollection<Class>(Storage.Instance.Classes);
         }
     }
 }

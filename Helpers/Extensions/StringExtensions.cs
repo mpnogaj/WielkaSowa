@@ -10,7 +10,7 @@ namespace WielkaSowa.Helpers.Extensions
             if (s.Length == 0) return true;
             try
             {
-                Convert.ToInt32(s);
+                _ = Convert.ToInt32(s);
                 return true;
             }
             catch
@@ -25,7 +25,7 @@ namespace WielkaSowa.Helpers.Extensions
             if (s.Length == 0) return true;
             try
             {
-                Convert.ToDouble(s.Replace('.', ','));
+                _ = Convert.ToDouble(s.Replace('.', ','));
                 return true;
             }
             catch

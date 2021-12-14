@@ -1,18 +1,17 @@
+using System.Threading.Tasks;
 using Avalonia;
-using Avalonia.Styling;
-using Avalonia.Themes.Fluent;
-using System;
+using Newtonsoft.Json;
 using WielkaSowa.ViewModels;
 
-namespace WielkaSowa.Helpers
+namespace WielkaSowa.Models
 {
 	public class SettingsModel : ViewModelBase
 	{
-		private bool _simpleUI;
-		public bool SimpleUI 
+		private bool _simpleUi;
+		public bool SimpleUi 
 		{ 
-			get => _simpleUI;
-			set => SetProperty(ref _simpleUI, value);
+			get => _simpleUi;
+			set => SetProperty(ref _simpleUi, value);
 		}
 
 		private bool _darkTheme;
@@ -22,25 +21,39 @@ namespace WielkaSowa.Helpers
 			set => SetProperty(ref _darkTheme, value);
         }
 
-        public SettingsModel()
+		private string _pathToCustomMultipliers;
+		public string PathToCustomMultipliers
 		{
-			_simpleUI = false;
+			get => _pathToCustomMultipliers;
+			set  => SetProperty(ref _pathToCustomMultipliers, value);
+		}
+		
+		[JsonIgnore]
+		public Multipliers Multipliers { get; private set; }
+
+		public SettingsModel()
+		{
+			_simpleUi = false;
 			_darkTheme = true;
+			_pathToCustomMultipliers = "";
+			Multipliers = Multipliers.Default;
 		}
 
-		public void ApplySettings()
+		public async Task ApplySettings()
         {
 			var res = Application.Current.Resources;
-			res["ComplexUI"] = !SimpleUI;
-			res["TransparencyHint"] = Converters.BoolToWindowTransparencyLevel.ToWindowTransparencyLevel(SimpleUI);
-		}
+			res["ComplexUI"] = !SimpleUi;
+			res["TransparencyHint"] = Converters.BoolToWindowTransparencyLevel.ToWindowTransparencyLevel(SimpleUi);
+			Multipliers = await Multipliers.CreateMultipliers(_pathToCustomMultipliers);
+        }
 
 		public static SettingsModel Clone(SettingsModel settingsModel)
         {
 			return new SettingsModel()
 			{
-				SimpleUI = settingsModel.SimpleUI,
-				DarkTheme = settingsModel.DarkTheme
+				SimpleUi = settingsModel.SimpleUi,
+				DarkTheme = settingsModel.DarkTheme,
+				PathToCustomMultipliers = settingsModel.PathToCustomMultipliers
 			};
         }
     }
