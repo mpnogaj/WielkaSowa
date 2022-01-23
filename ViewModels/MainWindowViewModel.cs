@@ -98,7 +98,7 @@ namespace WielkaSowa.ViewModels
             });
             SaveCommand = new AsyncRelayCommand(async () =>
             {
-                if (File.Exists(Storage.Instance.CurrentFile))
+                if (File.Exists(Storage.Instance.CurrentFilePath))
                 {
                     await Storage.Instance.SaveToFile();
                 }

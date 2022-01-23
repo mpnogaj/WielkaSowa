@@ -8,6 +8,7 @@ using Avalonia.Media;
 using Avalonia.Themes.Fluent;
 using Avalonia.Threading;
 using WielkaSowa.Helpers;
+using WielkaSowa.Services;
 using WielkaSowa.Views;
 
 namespace WielkaSowa
@@ -18,6 +19,7 @@ namespace WielkaSowa
         public override void Initialize()
         {
             AvaloniaXamlLoader.Load(this);
+            Logger.Init();
             Storage.Init();
             Settings.Init();
             Styles.Insert(0, (FluentTheme)Resources[LightThemeKey]!);
