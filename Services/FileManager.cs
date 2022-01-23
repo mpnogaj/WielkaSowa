@@ -14,11 +14,13 @@ namespace WielkaSowa.Services
 		}
 
 		private readonly string _file;
-		private readonly bool _append; 
+		private readonly bool _append;
 
 		public FileManager(string path, bool shouldAppend)
 		{
 			_file = path;
+			string directory = Path.GetDirectoryName(path)!;
+			if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
 			_append = shouldAppend;
 		}
 
@@ -29,13 +31,16 @@ namespace WielkaSowa.Services
 		/// Writes to file
 		/// </summary>
 		/// <param name="content">String to write to file</param>
-		public async Task Write(string content)
+		public Task Write(string content)
 		{
-			byte[] bytes = Encoding.UTF8.GetBytes(content);
-			using var sw = File.OpenWrite(_file);
-			sw.Seek(0, _append ? SeekOrigin.End : SeekOrigin.Begin);
-			await sw.WriteAsync(bytes);
-			sw.Close();
+			// lock for thread safety
+			lock (this)
+			{
+				byte[] bytes = Encoding.UTF8.GetBytes(content);
+				using var sw = File.OpenWrite(_file);
+				sw.Seek(0, _append ? SeekOrigin.End : SeekOrigin.Begin);
+				return sw.WriteAsync(bytes, 0, bytes.Length);
+			}
 		}
 
 		public async Task WriteLine(object line)

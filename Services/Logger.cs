@@ -27,7 +27,7 @@ namespace WielkaSowa.Services
 			string fileName = options.FileName == string.Empty
 				? $"log_{date}.log"
 				: options.FileName;
-			_logFile = new FileManager(@$"{fileName}", options.ShouldAppend);
+			_logFile = new FileManager(@$"./Logs/{fileName}", options.ShouldAppend);
 			Log("Initialized logger!");
 		}
 

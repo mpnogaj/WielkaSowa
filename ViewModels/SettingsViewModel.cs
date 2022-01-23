@@ -45,7 +45,9 @@ namespace WielkaSowa.ViewModels
                     Filters = Constants.DataFileFilters,
                     Title = "Wybierz plik ze współczynnikami"
                 };
-                string file = (await ofd.ShowAsync(Essentials.GetWindowOfType(typeof(SettingsWindow))))[0];
+                var res = await ofd.ShowAsync(Essentials.GetWindowOfType(typeof(SettingsWindow))!);
+                if (res == null || res.Length == 0) return;
+                string file = res[0];
                 Temp.PathToCustomMultipliers = file;
             });
             DefaultMultipliersCommand = new RelayCommand(() =>
