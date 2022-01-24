@@ -30,8 +30,8 @@
             <StackPanel Orientation="Horizontal" Spacing="7">
 	            <Button Content="Wybierz plik" Command="{CompiledBinding ChooseMultipliersFileCommand}"/>
 	            <Button Content="Domyślne" Command="{CompiledBinding DefaultMultipliersCommand}"/>
-	            <Button Content="Utwórz nowy plik" Command="{CompiledBinding DefaultMultipliersCommand}"/>
-	            <Button Content="Edytuj wybrany" Command="{CompiledBinding DefaultMultipliersCommand}"/>
+	            <Button Content="Utwórz nowy plik" Command="{CompiledBinding CreateMultipliersFileCommand}"/>
+	            <Button Content="Edytuj wybrany" Command="{CompiledBinding EditMultipliersFileCommand}"/>
             </StackPanel>
             <StackPanel Orientation="Horizontal" Spacing="7">
 	            <TextBlock VerticalAlignment="Center" Text="Ścieżka do pliku:"/>

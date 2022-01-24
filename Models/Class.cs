@@ -4,6 +4,7 @@ using System.Text;
 using WielkaSowa.Helpers;
 using WielkaSowa.Helpers.Calculators;
 using WielkaSowa.Helpers.Extensions;
+using WielkaSowa.Services;
 using WielkaSowa.ViewModels;
 
 namespace WielkaSowa.Models
@@ -366,12 +367,12 @@ namespace WielkaSowa.Models
         public Class()
         {
             _classId = DateTime.Now.ToFileTime();
-            Storage.Instance!.Classes.Add(this);
+            Storage.Instance.Classes.Add(this);
         }
 
         public void RecalculatePoints()
         {
-            Multipliers m = Settings.Instance!.Current.Multipliers;
+            Multipliers m = Settings.Instance.Current.Multipliers;
             BehaviourPoints = 
                 _wzor.ToInt() * m.MWzor + 
                 _bdb.ToInt() * m.MBdb + 

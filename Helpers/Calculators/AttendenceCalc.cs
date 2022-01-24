@@ -4,12 +4,14 @@ using System.Linq;
 using WielkaSowa.Models;
 using WielkaSowa.Helpers.Extensions;
 using AttPair = WielkaSowa.Helpers.Pair<double, int> ;
+using WielkaSowa.Services;
 
 namespace WielkaSowa.Helpers.Calculators
 {
     public static class AttendenceCalc
     {
         private static readonly int[] AttPoints = { 50, 40, 30, 0 };
+        private const double Ep = 0.001;
 
         public static void AssingPoints(List<AttPair> list)
         {
@@ -18,7 +20,7 @@ namespace WielkaSowa.Helpers.Calculators
             foreach(var c in list)
             {
                 // Check if ex aequo
-                if (Math.Abs(prev - c.First) > 0.001) currPlace++;
+                if (Math.Abs(prev - c.First) > Ep) currPlace++;
                 Storage.Instance!.Classes[c.Second].AttPoints = AttPoints[Math.Min(currPlace, 3)];
                 prev = c.First;
             }

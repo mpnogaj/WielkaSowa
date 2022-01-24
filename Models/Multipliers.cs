@@ -1,7 +1,7 @@
 using System;
-using System.IO;
 using System.Threading.Tasks;
 using Newtonsoft.Json;
+using WielkaSowa.Services;
 
 namespace WielkaSowa.Models
 {
@@ -61,7 +61,7 @@ namespace WielkaSowa.Models
 		// ReSharper restore InconsistentNaming
 		#endregion
 
-		public static Multipliers Default => new Multipliers();
+		public static Multipliers Default => new();
 		
 		private Multipliers() { }
 
@@ -73,17 +73,9 @@ namespace WielkaSowa.Models
 		{
 			try
 			{
-				string json;
-				using (StreamReader sr = new(pathToFile))
-				{
-					json = await sr.ReadToEndAsync();
-				}
+				string json = await new FileManager(pathToFile, false).Read();
 				var fromFile = JsonConvert.DeserializeObject<Multipliers>(json);
 				return fromFile ?? Default;
-			}
-			catch (FileNotFoundException ex)
-			{
-				Console.WriteLine(ex);
 			}
 			catch (JsonException ex)
 			{

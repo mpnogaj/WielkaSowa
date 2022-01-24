@@ -6,6 +6,7 @@ using System.IO;
 using System.Threading.Tasks;
 using WielkaSowa.Helpers;
 using WielkaSowa.Models;
+using WielkaSowa.Services;
 using WielkaSowa.ViewModels.Commands;
 using WielkaSowa.ViewModels.Commands.Async;
 using WielkaSowa.Views;
@@ -91,7 +92,7 @@ namespace WielkaSowa.ViewModels
                     Filters = Constants.DataFileFilters
                 };
                 var res = await dialog.ShowAsync(Essentials.GetMainWindow());
-                if (res.Length > 0 && !string.IsNullOrEmpty(res[0]))
+                if (res != null && res.Length > 0 && !string.IsNullOrEmpty(res[0]))
                 {
                     await Storage.Instance.OpenAndLoadFile(res[0]);
                 }
@@ -123,10 +124,10 @@ namespace WielkaSowa.ViewModels
                 Filters = Constants.DataFileFilters,
                 Title = "Zapisz dane do pliku"
             };
-            string res = await dialog.ShowAsync(Essentials.GetMainWindow());
+            string? res = await dialog.ShowAsync(Essentials.GetMainWindow());
             if (!string.IsNullOrEmpty(res))
             {
-                await Storage.Instance!.SaveToFile(res);
+                await Storage.Instance.SaveToFile(res);
             }
         }
 

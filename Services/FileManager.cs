@@ -16,11 +16,15 @@ namespace WielkaSowa.Services
 		private readonly string _file;
 		private readonly bool _append;
 
-		public FileManager(string path, bool shouldAppend)
+		public FileManager(string path, bool shouldAppend = false)
 		{
 			_file = path;
 			string directory = Path.GetDirectoryName(path)!;
-			if (!Directory.Exists(directory)) Directory.CreateDirectory(directory);
+			if (!string.IsNullOrWhiteSpace(directory) && !Directory.Exists(directory))
+			{
+				Directory.CreateDirectory(directory);
+			}
+
 			_append = shouldAppend;
 		}
 

@@ -1,15 +1,12 @@
 ﻿using Newtonsoft.Json;
 using System;
 using System.Collections.Generic;
-using System.Diagnostics;
 using System.IO;
-using System.Text;
 using System.Threading.Tasks;
 using WielkaSowa.Helpers.Calculators;
 using WielkaSowa.Models;
-using WielkaSowa.Services;
 
-namespace WielkaSowa.Helpers
+namespace WielkaSowa.Services
 {
 	public class Storage
 	{
@@ -30,7 +27,7 @@ namespace WielkaSowa.Helpers
 		}
 
 		private FileManager? _file;
-		
+
 
 		public event EventHandler? ClassesUpdated;
 
@@ -49,7 +46,7 @@ namespace WielkaSowa.Helpers
 		private void OpenFile(string? filePath)
 		{
 			if (filePath == null) return;
-			_file = filePath == string.Empty || !File.Exists(filePath) 
+			_file = filePath == string.Empty || !File.Exists(filePath)
 				? null
 				: new FileManager(filePath, false);
 		}
@@ -85,7 +82,7 @@ namespace WielkaSowa.Helpers
 		public async Task SaveToFile(string? newFilePath = null)
 		{
 			string json = JsonConvert.SerializeObject(Classes);
-			if(newFilePath != null)
+			if (newFilePath != null)
 			{
 				_file = new FileManager(newFilePath, false);
 			}
