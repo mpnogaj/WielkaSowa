@@ -457,9 +457,9 @@ namespace WielkaSowa.Models
 
     public class ClassData
     {
-        public int LetterIndex { get; }
-        public int LevelIndex { get; }
-        public bool AfterPrimarySchool { get; }
+        public int LetterIndex { get; set; }
+        public int LevelIndex { get; set; }
+        public bool AfterPrimarySchool { get; set; }
 
         public List<char> AvailableLetters { get; } = new()
         {
